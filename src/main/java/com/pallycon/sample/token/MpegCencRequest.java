@@ -1,4 +1,4 @@
-package com.pallycon.sample.dto.token.externalPolicy;
+package com.pallycon.sample.token;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;

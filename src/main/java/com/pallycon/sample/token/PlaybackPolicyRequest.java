@@ -1,11 +1,10 @@
-package com.pallycon.sample.dto.token.playbackPolicy;
+package com.pallycon.sample.token;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.pallycon.sample.exception.PallyConTokenException;
 import lombok.Data;
 
-import java.util.Optional;
 import java.util.regex.Pattern;
 
 /**
@@ -45,14 +44,11 @@ public class PlaybackPolicyRequest {
     }
 
     public void check() throws PallyConTokenException {
-        if (0 != this.duration && null != this.expireDate) {
-            throw new PallyConTokenException("playbackPolicy : choose one between duration and expire date");
+        if (null != this.expireDate && !checkDates(this.expireDate)) {
+            throw new PallyConTokenException("1009");
         }
         if (false == this.limit && (0 != this.duration || null != this.expireDate)) {
-            throw new PallyConTokenException("playbackPolicy : required to set the limit");
-        }
-        if (null != this.expireDate && !checkDates(this.expireDate)) {
-            throw new PallyConTokenException("playbackPolicy : date format does not match");
+            throw new PallyConTokenException("1010");
         }
     }
 

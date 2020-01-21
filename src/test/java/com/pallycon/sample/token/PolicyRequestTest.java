@@ -1,24 +1,18 @@
-package com.pallycon.sample.dto.token;
+package com.pallycon.sample.token;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.pallycon.sample.dto.token.externalPolicy.ExternalKeyRequest;
-import com.pallycon.sample.dto.token.externalPolicy.HlsAesRequest;
-import com.pallycon.sample.dto.token.externalPolicy.MpegCencRequest;
-import com.pallycon.sample.dto.token.externalPolicy.NcgRequest;
-import com.pallycon.sample.dto.token.playbackPolicy.PlaybackPolicyRequest;
-import com.pallycon.sample.dto.token.securityPolicy.SecurityPolicyRequest;
 import com.pallycon.sample.exception.PallyConTokenException;
 import org.junit.Before;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
 /**
  * Created By NY on 2020-01-15.
  */
-class PolicyRequestTest {
+public class PolicyRequestTest {
 
     private PlaybackPolicyRequest playback;
     private SecurityPolicyRequest security;
@@ -26,7 +20,7 @@ class PolicyRequestTest {
     private static Logger logger = LoggerFactory.getLogger(PolicyRequestTest.class);
 
     @Before
-    void setPlayback() {
+    public void setPlayback() {
         logger.info("start to set up the playback");
 
         playback = new PlaybackPolicyRequest();
@@ -38,7 +32,7 @@ class PolicyRequestTest {
     }
 
     @Before
-    void setSecurity() {
+    public void setSecurity() {
         logger.info("start to set up the security");
 
         security = new SecurityPolicyRequest();
@@ -49,7 +43,7 @@ class PolicyRequestTest {
     }
 
     @Before
-    void setExternal() {
+    public void setExternal() {
         logger.info("start to set up the external");
 
         external = new ExternalKeyRequest();
@@ -63,7 +57,7 @@ class PolicyRequestTest {
     }
 
     @Test
-    void isPolicyNull() throws PallyConTokenException, JsonProcessingException {
+    public void isPolicyNull() throws PallyConTokenException, JsonProcessingException {
         setPlayback();
         PolicyRequest policyRequest = new PolicyRequest.PolicyBuilder().playbackPolicy(playback).build();
         assertNotNull(policyRequest);
@@ -71,7 +65,7 @@ class PolicyRequestTest {
     }
 
     @Test
-    void getPlaybackPolicy() throws PallyConTokenException {
+    public void getPlaybackPolicy() throws PallyConTokenException, JsonProcessingException {
         setPlayback();
 
         PolicyRequest policyRequest = new PolicyRequest.PolicyBuilder().playbackPolicy(playback).build();
@@ -79,12 +73,11 @@ class PolicyRequestTest {
         assertEquals(true, policyRequest.getPlaybackPolicy().isLimit());
         assertEquals(false, policyRequest.getPlaybackPolicy().isPersistent());
 
-        logger.debug(policyRequest.getPlaybackPolicy().getExpireDate());
-        logger.debug("duration: " + policyRequest.getPlaybackPolicy().getDuration());
+        logger.debug(policyRequest.toJsonString());
     }
 
     @Test
-    void getPlaybackPolicy2() throws PallyConTokenException, JsonProcessingException {
+    public void getPlaybackPolicy2() throws PallyConTokenException, JsonProcessingException {
         setPlayback();
         playback.setExpireDate("2020-01-01T23:59:59Z");
         playback.setDuration(0);
@@ -92,12 +85,12 @@ class PolicyRequestTest {
         PolicyRequest policyRequest = new PolicyRequest.PolicyBuilder().playbackPolicy(playback).build();
         assertEquals("2020-01-01T23:59:59Z", policyRequest.getPlaybackPolicy().getExpireDate());
 
-        logger.debug("playback" + policyRequest.getPlaybackPolicy());
+        logger.debug("playback: " + policyRequest.getPlaybackPolicy());
         logger.debug(policyRequest.toJsonString());
     }
 
     @Test
-    void getSecurityPolicy() throws PallyConTokenException, JsonProcessingException {
+    public void getSecurityPolicy() throws PallyConTokenException, JsonProcessingException {
         setSecurity();
 
         PolicyRequest policyRequest = new PolicyRequest.PolicyBuilder().securityPolicy(security).build();
@@ -111,7 +104,7 @@ class PolicyRequestTest {
     }
 
     @Test
-    void getExternalKey() throws PallyConTokenException, JsonProcessingException {
+    public void getExternalKey() throws PallyConTokenException, JsonProcessingException {
         setExternal();
         PolicyRequest policyRequest = new PolicyRequest.PolicyBuilder().externalKey(external).build();
         assertEquals("11115555444477776666000033332222", policyRequest.getExternalKey().getHlsAes().getIv());
@@ -125,18 +118,18 @@ class PolicyRequestTest {
     }
 
     @Test
-    void makeSampleToken() throws PallyConTokenException, JsonProcessingException {
+    public void makeSampleToken() throws PallyConTokenException, JsonProcessingException {
         PlaybackPolicyRequest playback = new PlaybackPolicyRequest(true, false, 12);
 
         PolicyRequest policyRequest = new PolicyRequest.PolicyBuilder()
                 .playbackPolicy(playback)
                 .build();
 
-        String test = "{\"playbackPolicy\":{\"limit\":true,\"persistent\":false,\"duration\":12}}";
+        String test = "{\"playback_policy\":{\"limit\":true,\"persistent\":false,\"duration\":12}}";
         assertEquals(test , policyRequest.toJsonString());
     }
     @Test
-    void makeSampleToken2() throws PallyConTokenException, JsonProcessingException {
+    public void makeSampleToken2() throws PallyConTokenException, JsonProcessingException {
         PlaybackPolicyRequest playback = new PlaybackPolicyRequest(true, false, 12);
 
         SecurityPolicyRequest security = new SecurityPolicyRequest();
@@ -153,7 +146,7 @@ class PolicyRequestTest {
     }
 
     @Test
-    void isEmptyPoliciesExist() throws PallyConTokenException, JsonProcessingException {
+    public void isEmptyPoliciesExist() throws PallyConTokenException, JsonProcessingException {
         PlaybackPolicyRequest playback = new PlaybackPolicyRequest();
         SecurityPolicyRequest security = new SecurityPolicyRequest();
 
@@ -162,6 +155,24 @@ class PolicyRequestTest {
 
         System.out.println(token.toJsonString());
         System.out.println(token2.toJsonString());
+    }
+
+    @Test
+    public void makeError() throws PallyConTokenException, JsonProcessingException {
+        PlaybackPolicyRequest playback = new PlaybackPolicyRequest();
+        playback.setExpireDate("2020");
+        String error = "";
+        PolicyRequest policy = null;
+        try {
+            policy = new PolicyRequest.PolicyBuilder()
+                    .playbackPolicy(playback)
+                    .build();
+            logger.debug(policy.toJsonString());
+        } catch (PallyConTokenException e) {
+            error = e.getMessage();
+            assertEquals("1009", e.getErrorCode().getErrorCode());
+            logger.debug("error message : "+error);
+        }
     }
 
 }

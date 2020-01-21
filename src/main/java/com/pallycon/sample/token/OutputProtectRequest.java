@@ -1,8 +1,7 @@
-package com.pallycon.sample.dto.token.securityPolicy;
+package com.pallycon.sample.token;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Data;
 
 /**
  * Created By NY on 2020-01-14.

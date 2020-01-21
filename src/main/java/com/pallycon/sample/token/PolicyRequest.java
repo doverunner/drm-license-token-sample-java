@@ -1,12 +1,9 @@
-package com.pallycon.sample.dto.token;
+package com.pallycon.sample.token;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.pallycon.sample.dto.token.externalPolicy.ExternalKeyRequest;
-import com.pallycon.sample.dto.token.playbackPolicy.PlaybackPolicyRequest;
-import com.pallycon.sample.dto.token.securityPolicy.SecurityPolicyRequest;
 import com.pallycon.sample.exception.PallyConTokenException;
 
 /**
@@ -37,7 +34,7 @@ public class PolicyRequest {
     // token만 생성해도 playbackPolicy && securityPolicy 세팅되어 있어야 한다,,ㅎ,,,,ㅎㅎㅎ,,
 
     //builder pattern
-    private PolicyRequest(PolicyBuilder policyBuilder){
+    private PolicyRequest(PolicyBuilder policyBuilder) {
         this.playbackPolicy = policyBuilder.playbackPolicy;
         this.securityPolicy = policyBuilder.securityPolicy;
         this.externalKey = policyBuilder.externalKey;
@@ -72,11 +69,7 @@ public class PolicyRequest {
             return token;
         }
 
-        private void validateTokenObject(PolicyRequest token) throws PallyConTokenException{
-            if (null == token) {
-                throw new PallyConTokenException("validate error: if you create token, use at least one policy");
-            }
-
+        private void validateTokenObject(PolicyRequest token) throws PallyConTokenException {
             if (null != token.playbackPolicy) {
                 token.playbackPolicy.check();
             }
@@ -92,11 +85,9 @@ public class PolicyRequest {
     }
     //----------------------------- end of builder pattern
 
-    // PallyCon exception으로 대체할 수 없는지?
-    // Exception - IOException - J~ 로 되어있음. //TODO exception check
     public String toJsonString() throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.writeValueAsString(this);
     }
-
 }
+

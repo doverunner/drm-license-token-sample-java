@@ -1,4 +1,4 @@
-package com.pallycon.sample.dto.token.externalPolicy;
+package com.pallycon.sample.token;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -7,8 +7,9 @@ import com.pallycon.sample.exception.PallyConTokenException;
 import java.util.regex.Pattern;
 
 /**
- * Created By NY on 2020-01-13.
+ * Created By NY on 2020-01-21.
  */
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ExternalKeyRequest {
 
@@ -18,8 +19,6 @@ public class ExternalKeyRequest {
     private HlsAesRequest hlsAes;
     @JsonProperty("ncg")
     private NcgRequest ncg;
-
-    //TODO jsonObject 변환해야 함. **Jackson object mapper + each field need to be set
 
     //constructor
     public ExternalKeyRequest() {
@@ -77,26 +76,26 @@ public class ExternalKeyRequest {
     //check each fields
     private void checkMpegCenc() throws PallyConTokenException {
         if (!checkHex16(this.mpegCenc.getKeyId())) {
-            throw new PallyConTokenException("mpegCenc: keyId not match hex16");
+            throw new PallyConTokenException("1019");
         }
         if (!checkHex16(this.mpegCenc.getKey())) {
-            throw new PallyConTokenException("mpegCenc: key not match hex16");
+            throw new PallyConTokenException("1020");
         }
         if (!checkHex16(this.mpegCenc.getIv())) {
-            throw new PallyConTokenException("mpegCenc: iv not match hex16");
+            throw new PallyConTokenException("1021");
         }
     }
     private void checkHlsAes() throws PallyConTokenException{
         if (!checkHex16(this.hlsAes.getKey())) {
-            throw new PallyConTokenException("hlsAes: key not match hex16");
+            throw new PallyConTokenException("1017");
         }
         if (!checkHex16(this.hlsAes.getIv())) {
-            throw new PallyConTokenException("hlsAes: iv not match hex16");
+            throw new PallyConTokenException("1018");
         }
     }
     private void checkNcg() throws PallyConTokenException{
         if (!checkHex32(this.ncg.getCek())) {
-            throw new PallyConTokenException("ncg: cek not match hex32");
+            throw new PallyConTokenException("1022");
         }
     }
 
@@ -109,4 +108,6 @@ public class ExternalKeyRequest {
         Pattern pattern = Pattern.compile("^[0-9a-f]{32}$");
         return pattern.matcher(words).matches();
     }
+
 }
+

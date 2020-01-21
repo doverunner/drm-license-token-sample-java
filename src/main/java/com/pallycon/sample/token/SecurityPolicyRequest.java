@@ -1,4 +1,4 @@
-package com.pallycon.sample.dto.token.securityPolicy;
+package com.pallycon.sample.token;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -38,7 +38,7 @@ public class SecurityPolicyRequest {
     }
 
     public SecurityPolicyRequest(boolean hardwareDrm, OutputProtectRequest outputProtect
-                            , boolean allowMobileAbnormalDevice, int playreadySecurityLevel) {
+            , boolean allowMobileAbnormalDevice, int playreadySecurityLevel) {
         this.hardwareDrm = hardwareDrm;
         this.outputProtect = outputProtect;
         this.allowMobileAbnormalDevice = allowMobileAbnormalDevice;
@@ -78,17 +78,8 @@ public class SecurityPolicyRequest {
     }
 
     public void check() throws PallyConTokenException {
-        if (150 != this.playreadySecurityLevel && 2000 != this.playreadySecurityLevel) {
-            throw new PallyConTokenException("securityPolicy : security level should be 150 or 2000");
-        }
-        if (null != this.outputProtect) {
-            checkOutputProtect();
-        }
-    }
-
-    private void checkOutputProtect() throws PallyConTokenException{
-        if (0 > this.outputProtect.getControlHdcp() || 2 < this.outputProtect.getControlHdcp()) {
-            throw new PallyConTokenException("securityPolicy : control hdcp should be in {0, 1, 2}");
+        if (150 > this.playreadySecurityLevel) {
+            throw new PallyConTokenException("1014");
         }
     }
 }
