@@ -7,7 +7,7 @@
     <artifactId>pallycon-token-sample</artifactId>
     <version>1.0.0</version>
     <name>sample</name>
-    <description>PallyCon Token Java Sample project for Spring Boot</description>
+    <description>PallyCon Token Java Sample project</description>
 
     <properties>
         <java.version>1.8</java.version>

@@ -4,7 +4,14 @@
 
 ### 환경
 
-- JAVA Version 1.8 이상
+- JAVA JDK 1.8 이상
+
+
+
+#### logback 설정 관련
+
+- `logbackProperties.properties` 에서 저장할 장소 세팅
+- `logback.xml`
 
 
 

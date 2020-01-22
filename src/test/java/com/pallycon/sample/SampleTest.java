@@ -83,8 +83,8 @@ public class SampleTest {
         if ("".equals(result)) {
             try {
                 tokenClient = new PallyConDrmTokenClient()
-                        .siteKey(Config.siteKey)
-                        .accessKey(Config.accesskey)
+                        .siteKey(Config.SITE_KEY)
+                        .accessKey(Config.ACCESS_KEY)
                         .widevine()
                         .siteId("TEST")
                         .cId("disney-animation")

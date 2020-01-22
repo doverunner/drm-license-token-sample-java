@@ -114,7 +114,7 @@ public class PolicyRequestTest {
                 "11b11af515c10000fff111a1aef51510",
                 "11b11af515c10000fff111a1aef51510"
         ));
-        System.out.println(policyRequest.toJsonString());
+        logger.debug(policyRequest.toJsonString());
     }
 
     @Test
@@ -142,7 +142,7 @@ public class PolicyRequestTest {
 
         PolicyRequest policyRequest = new PolicyRequest.PolicyBuilder().playbackPolicy(playback).externalKey(external).securityPolicy(security)
                 .build();
-        System.out.println(policyRequest.toJsonString());
+        logger.debug(policyRequest.toJsonString());
     }
 
     @Test
@@ -153,8 +153,8 @@ public class PolicyRequestTest {
         PolicyRequest token = new PolicyRequest.PolicyBuilder().playbackPolicy(playback).securityPolicy(security).build();
         PolicyRequest token2 = new PolicyRequest.PolicyBuilder().build();
 
-        System.out.println(token.toJsonString());
-        System.out.println(token2.toJsonString());
+        logger.debug(token.toJsonString());
+        logger.debug(token2.toJsonString());
     }
 
     @Test

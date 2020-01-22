@@ -30,9 +30,6 @@ public class PolicyRequest {
         return externalKey;
     }
 
-    //TODO JSON 으로 바꿀 때 필드명 토큰형식으로 세팅 필요
-    // token만 생성해도 playbackPolicy && securityPolicy 세팅되어 있어야 한다,,ㅎ,,,,ㅎㅎㅎ,,
-
     //builder pattern
     private PolicyRequest(PolicyBuilder policyBuilder) {
         this.playbackPolicy = policyBuilder.playbackPolicy;

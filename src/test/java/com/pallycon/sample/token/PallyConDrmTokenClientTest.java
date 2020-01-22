@@ -60,20 +60,6 @@ public class PallyConDrmTokenClientTest {
         logger.debug(policy.toJsonString());
         logger.info("end of set up the policy");
     }
-//
-//    @Before
-//    public void setUpToken() throws Exception {
-//        logger.info("start to set up the token!");
-//        tokenClient = new PallyConDrmTokenClient()
-//                .siteKey(Config.siteKey)
-//                .accessKey(Config.accesskey)
-//                .widevine()
-//                .siteId("TEST")
-//                .cId("disney-animation")
-//                .userId("test1234")
-//                .policy(policy);
-//        logger.debug(tokenClient.toJsonString());
-//    }
 
     @Test
     public void makeError() throws PallyConTokenException, JsonProcessingException, Exception {
@@ -109,13 +95,13 @@ public class PallyConDrmTokenClientTest {
         }
         logger.debug(errorCode);
         try {
-            errorCode = client.accessKey(Config.accesskey).execute();
+            errorCode = client.accessKey(Config.ACCESS_KEY).execute();
         } catch (PallyConTokenException e) {
             assertEquals("1004", e.getErrorCode().getErrorCode());
         }
         logger.debug(errorCode);
         try {
-            errorCode = client.siteKey(Config.siteKey).execute();
+            errorCode = client.siteKey(Config.SITE_KEY).execute();
         } catch (PallyConTokenException e) {
             assertEquals("1005", e.getErrorCode().getErrorCode());
         }
