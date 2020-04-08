@@ -97,7 +97,7 @@ public class PallyConDrmTokenClient implements PallyConDrmToken {
         return this;
     }
 
-    public PallyConDrmTokenClient policy(PolicyRequest policyRequest) throws Exception {
+    public PallyConDrmTokenClient policy(PallyConDrmTokenPolicy policyRequest) throws Exception {
         this.policy = policyRequest.toJsonString();
         StringEncrypter stringEncrypter = new StringEncrypter(this.siteKey, AES_IV);
         this.encPolicy = stringEncrypter.encrypt(policyRequest.toJsonString());

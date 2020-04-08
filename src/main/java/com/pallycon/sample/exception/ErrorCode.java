@@ -19,6 +19,7 @@ public class ErrorCode {
         this.setErrorMessage(errorCode);
     }
 
+    // TODO switch case 로 바꾸기
     private void setErrorMessage(String errorCode) {
         if ("1000".equals(errorCode)) {
             this.errorMessage = "Token err : The userId is Required";

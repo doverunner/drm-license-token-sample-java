@@ -1,0 +1,26 @@
+package com.pallycon.sample.test;
+
+import com.pallycon.sample.exception.PallyConTokenException;
+
+/**
+ * for @playback_policy @allowed_track_types
+ */
+public enum AllowedTrackTypes {
+
+    SD_ONLY("SD_ONLY"),
+    SD_HD("SD_HD"),
+    SD_UHD1("SD_UHD1"),
+    SD_UHD2("SD_UHD2")
+    ;
+
+    private String value;
+
+    AllowedTrackTypes(String value) {
+        this.value = value;
+    }
+
+    public String getValue() {
+        return this.value;
+    }
+
+}

@@ -7,6 +7,8 @@ import com.pallycon.sample.exception.PallyConTokenException;
 /**
  * Created By NY on 2020-01-13.
  */
+
+@Deprecated
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class SecurityPolicyRequest {
 

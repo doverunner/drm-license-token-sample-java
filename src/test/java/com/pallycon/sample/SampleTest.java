@@ -4,6 +4,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.pallycon.sample.config.Config;
 import com.pallycon.sample.exception.PallyConTokenException;
 import com.pallycon.sample.token.*;
+import com.pallycon.sample.token.policy.ExternalKeyPolicy;
+import com.pallycon.sample.token.policy.ExternalKeyPolicyHlsAes;
+import com.pallycon.sample.token.policy.ExternalKeyPolicyMpegCenc;
+import com.pallycon.sample.token.policy.PlaybackPolicy;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +29,7 @@ public class SampleTest {
     @Test
     public void makeToken() throws PallyConTokenException, JsonProcessingException, Exception {
         logger.info("start to set up the policy");
-        PolicyRequest policy = null;
+        PallyConDrmTokenPolicy policy = null;
         PallyConDrmTokenClient tokenClient = null;
         String result = "";
 
@@ -34,9 +38,9 @@ public class SampleTest {
          * 1. set up policies you want
          * */
 
-        PlaybackPolicyRequest playback = new PlaybackPolicyRequest();
+        PlaybackPolicy playback = new PlaybackPolicy();
         SecurityPolicyRequest security = new SecurityPolicyRequest();
-        ExternalKeyRequest externalKey = new ExternalKeyRequest();
+        ExternalKeyPolicy externalKey = new ExternalKeyPolicy();
 
         //set security
         security.setPlayreadySecurityLevel(2000);
@@ -44,29 +48,29 @@ public class SampleTest {
         security.getOutputProtect().setControlHdcp(2);
 
         //set external key
-        externalKey.setHlsAes(new HlsAesRequest(
+        externalKey.setHlsAes(new ExternalKeyPolicyHlsAes(
                 "1111aaef51510000ffff1111aaef5151",
                 "11115555444477776666000033332222"
         ));
-        externalKey.setMpegCenc(new MpegCencRequest(
+        externalKey.setMpegCenc(new ExternalKeyPolicyMpegCenc(
                 "d5f1a1aa55546666d5f1a1aa55546666",
                 "11b11af515c10000fff111a1aef51510",
                 "11b11af515c10000fff111a1aef51510"
         ));
 
         //set playback
-        playback.setLimit(true); // error code : 1010
-        playback.setDuration(6000);
-        playback.setPersistent(false);
+//        playback.setLimit(true); // error code : 1010
+//        playback.setLicenseDuration(6000);
+//        playback.setPersistent(false);
 
 
         /**
          * 2. build policy
          * */
         try {
-            policy = new PolicyRequest.PolicyBuilder()
+            policy = new PallyConDrmTokenPolicy.PolicyBuilder()
                     .playbackPolicy(playback)
-                    .securityPolicy(security)
+//                    .securityPolicy(security)
                     .externalKey(externalKey)
                     .build();
             logger.debug(policy.toJsonString());
