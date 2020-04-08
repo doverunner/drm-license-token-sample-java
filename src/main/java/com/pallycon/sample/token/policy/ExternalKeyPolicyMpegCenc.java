@@ -9,7 +9,6 @@ import lombok.Data;
 /**
  * Created By NY on 2020-01-14.
  */
-@Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({"track_type", "key_id", "key", "iv"})
 public class ExternalKeyPolicyMpegCenc {
@@ -23,19 +22,32 @@ public class ExternalKeyPolicyMpegCenc {
     @JsonProperty("iv")
     private String iv;
 
-    @Deprecated
-    public ExternalKeyPolicyMpegCenc(String keyId, String key, String iv) {
+    public ExternalKeyPolicyMpegCenc(TrackType trackType, String keyId, String key) {
+        this.trackType = trackType;
         this.keyId = keyId;
         this.key = key;
-        this.iv = iv;
     }
 
-
-    //TODO CHANGE CONSTRUCTOR TO THIS
     public ExternalKeyPolicyMpegCenc(TrackType trackType, String keyId, String key, String iv) {
         this.trackType = trackType;
         this.keyId = keyId;
         this.key = key;
         this.iv = iv;
+    }
+
+    public String getTrackType() {
+        return trackType.getValue();
+    }
+
+    public String getKeyId() {
+        return keyId;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public String getIv() {
+        return iv;
     }
 }

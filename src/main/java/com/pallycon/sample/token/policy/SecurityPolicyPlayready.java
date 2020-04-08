@@ -70,4 +70,28 @@ public class SecurityPolicyPlayready {
         this.requireHdcpType1 = requireHdcpType1;
         return this;
     }
+
+    public int getSecurityLevel() {
+        return securityLevel;
+    }
+
+    public int getDigitalVideoProtection() {
+        return digitalVideoProtection;
+    }
+
+    public int getAnalogVideoProtection() {
+        return analogVideoProtection;
+    }
+
+    public int getCompressedDigitalAudioProtection() {
+        return compressedDigitalAudioProtection;
+    }
+
+    public int getUncompressedDigitalAudioProtection() {
+        return uncompressedDigitalAudioProtection;
+    }
+
+    public boolean getRequireHdcpType1() {
+        return requireHdcpType1;
+    }
 }

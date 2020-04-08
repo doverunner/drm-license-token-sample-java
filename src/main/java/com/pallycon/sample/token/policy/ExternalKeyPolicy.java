@@ -28,18 +28,8 @@ public class ExternalKeyPolicy {
     private List<ExternalKeyPolicyHlsAes> hlsAesList;
 
     @JsonProperty("ncg")
+    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     private ExternalKeyPolicyNcg ncg;
-
-    @Deprecated
-    @JsonIgnore
-    @JsonProperty("mpeg_cenc")
-    private ExternalKeyPolicyMpegCenc mpegCenc;
-
-    @Deprecated
-    @JsonIgnore
-    @JsonProperty("hls_aes")
-    private ExternalKeyPolicyHlsAes hlsAes;
-
 
     //constructor
     public ExternalKeyPolicy() {
@@ -87,33 +77,7 @@ public class ExternalKeyPolicy {
         return this;
     }
 
-    //setter -> changed to BUILDER PATTERN
-    @Deprecated
-    public void setMpegCenc(ExternalKeyPolicyMpegCenc mpegCenc) {
-        this.mpegCenc = mpegCenc;
-    }
-
-    @Deprecated
-    public void setHlsAes(ExternalKeyPolicyHlsAes hlsAes) {
-        this.hlsAes = hlsAes;
-    }
-
-    @Deprecated
-    public void setNcg(ExternalKeyPolicyNcg ncg) {
-        this.ncg = ncg;
-    }
-
     //getter
-    @Deprecated
-    public ExternalKeyPolicyMpegCenc getMpegCenc() {
-        return mpegCenc;
-    }
-
-    @Deprecated
-    public ExternalKeyPolicyHlsAes getHlsAes() {
-        return hlsAes;
-    }
-
     public ExternalKeyPolicyNcg getNcg() {
         return ncg;
     }
@@ -147,7 +111,7 @@ public class ExternalKeyPolicy {
             if (!checkHex16(mpegCenc.getKey())) {
                 throw new PallyConTokenException("1020");
             }
-            if (!checkHex16(mpegCenc.getIv())) {
+            if (null != mpegCenc.getIv() && !checkHex16(mpegCenc.getIv())) {
                 throw new PallyConTokenException("1021");
             }
         }

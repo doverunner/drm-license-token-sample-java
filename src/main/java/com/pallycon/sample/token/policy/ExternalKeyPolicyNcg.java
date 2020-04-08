@@ -7,7 +7,6 @@ import lombok.Data;
 /**
  * Created By NY on 2020-01-14.
  */
-@Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ExternalKeyPolicyNcg {
     @JsonProperty("cek")
@@ -15,5 +14,9 @@ public class ExternalKeyPolicyNcg {
 
     public ExternalKeyPolicyNcg(String cek) {
         this.cek = cek;
+    }
+
+    public String getCek() {
+        return cek;
     }
 }

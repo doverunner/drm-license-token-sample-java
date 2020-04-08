@@ -31,10 +31,10 @@ public class SecurityPolicy {
 
     public SecurityPolicy() {
         this.trackType = TrackType.ALL.getValue();
-        widevine = new SecurityPolicyWidevine();
-        playready = new SecurityPolicyPlayready();
-        fairplay = new SecurityPolicyFairplay();
-        ncg = new SecurityPolicyNcg();
+        this.widevine = new SecurityPolicyWidevine();
+        this.playready = new SecurityPolicyPlayready();
+        this.fairplay = new SecurityPolicyFairplay();
+        this.ncg = new SecurityPolicyNcg();
     }
 
     public SecurityPolicy trackType(TrackType trackType) {

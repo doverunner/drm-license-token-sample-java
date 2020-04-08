@@ -10,6 +10,9 @@ import com.pallycon.sample.token.policy.ExternalKeyPolicy;
 import com.pallycon.sample.token.policy.PlaybackPolicy;
 import com.pallycon.sample.token.policy.SecurityPolicy;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Create policy data for @ PallyConDrmToken
  */
@@ -24,63 +27,65 @@ public class PallyConDrmTokenPolicy {
     private PlaybackPolicy playbackPolicy;
 
     @JsonProperty("security_policy")
-    private SecurityPolicy securityPolicy;
+    private List<SecurityPolicy> securityPolicy;
 
     @JsonProperty("external_key")
     private ExternalKeyPolicy externalKey;
 
-
-    private PallyConDrmTokenPolicy(PolicyBuilder policyBuilder) {
+    public PallyConDrmTokenPolicy(PolicyBuilder policyBuilder) {
         this.playbackPolicy = policyBuilder.playbackPolicy;
         this.securityPolicy = policyBuilder.securityPolicy;
         this.externalKey = policyBuilder.externalKey;
     }
 
     //----------------------------- start of builder pattern
-    public static class PolicyBuilder {
+    public static class PolicyBuilder{
         private PlaybackPolicy playbackPolicy;
-        private SecurityPolicy securityPolicy;
+        private List<SecurityPolicy> securityPolicy;
         private ExternalKeyPolicy externalKey;
 
-        /**
-         * create constructor as you want
-         */
+        public PolicyBuilder() {
+            this.playbackPolicy = new PlaybackPolicy();
+            this.securityPolicy = new ArrayList<>();
+        }
+
         public PolicyBuilder playbackPolicy(PlaybackPolicy playbackPolicy) {
             this.playbackPolicy = playbackPolicy;
             return this;
         }
-
-        public PolicyBuilder securityPolicy(SecurityPolicy securityPolicy) {
-            this.securityPolicy = securityPolicy;
+        public PolicyBuilder securityPolicy(List<SecurityPolicy> securityPolicyList) {
+            this.securityPolicy = securityPolicyList;
             return this;
         }
-
+        public PolicyBuilder securityPolicy(SecurityPolicy securityPolicy) {
+            this.securityPolicy.add(securityPolicy);
+            return this;
+        }
         public PolicyBuilder externalKey(ExternalKeyPolicy externalKey) {
             this.externalKey = externalKey;
             return this;
         }
 
         public PallyConDrmTokenPolicy build() throws PallyConTokenException {
-            PallyConDrmTokenPolicy token = new PallyConDrmTokenPolicy(this);
-            validateTokenObject(token);
-            return token;
+            PallyConDrmTokenPolicy policy = new PallyConDrmTokenPolicy(this);
+
+            // constructs default value of SecurityPolicy
+            if (this.securityPolicy.isEmpty()) {
+                this.securityPolicy.add(new SecurityPolicy());
+            }
+            validate();
+            return policy;
         }
 
-        private void validateTokenObject(PallyConDrmTokenPolicy token) throws PallyConTokenException {
-            if (null != token.playbackPolicy) {
-                token.playbackPolicy.check();
+        private void validate() throws PallyConTokenException {
+            this.playbackPolicy.check();
+
+            if (null != this.externalKey) {
+                this.externalKey.check();
             }
 
-//            if (null != token.securityPolicy) {
-//                token.securityPolicy.check();
-//            }
-
-            if (null != token.externalKey) {
-                token.externalKey.check();
-            }
         }
-    }
-    //----------------------------- end of builder pattern
+    } //----------------------------- end of builder pattern
 
     public String toJsonString() throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
@@ -91,7 +96,7 @@ public class PallyConDrmTokenPolicy {
         return playbackPolicy;
     }
 
-    public SecurityPolicy getSecurityPolicy() {
+    public List<SecurityPolicy> getSecurityPolicy() {
         return securityPolicy;
     }
 

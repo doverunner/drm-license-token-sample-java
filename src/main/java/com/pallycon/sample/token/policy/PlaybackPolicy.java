@@ -8,9 +8,6 @@ import com.pallycon.sample.test.AllowedTrackTypes;
 
 import java.util.regex.Pattern;
 
-/**
- * Created By NY on 2020-01-13.
- */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({"persistent", "license_duration", "expire_date", "allowed_track_types"})
 public class PlaybackPolicy {

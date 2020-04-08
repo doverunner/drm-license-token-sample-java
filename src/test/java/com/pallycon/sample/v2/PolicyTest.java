@@ -5,12 +5,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pallycon.sample.exception.PallyConTokenException;
 import com.pallycon.sample.test.TrackType;
 import com.pallycon.sample.token.PallyConDrmTokenPolicy;
-import com.pallycon.sample.token.PallyConDrmTokenPolicy2;
 import com.pallycon.sample.token.policy.ExternalKeyPolicy;
 import com.pallycon.sample.token.policy.ExternalKeyPolicyMpegCenc;
 import com.pallycon.sample.token.policy.PlaybackPolicy;
 import com.pallycon.sample.token.policy.SecurityPolicy;
-import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -83,6 +81,7 @@ public class PolicyTest {
                 "11b11af515c10000fff111a1aef51510",
                 "11b11af515c10000fff111a1aef51510"
         );
+
         ExternalKeyPolicy externalKeyTrue = new ExternalKeyPolicy();
         externalKeyTrue.mpegCenc(mpegCencTrue);
 
@@ -97,18 +96,38 @@ public class PolicyTest {
 //        logger.debug(objectMapper.writeValueAsString(policy));
 
         logger.info("--------------exception check--------------");
-        PallyConDrmTokenPolicy2 policy3 = new PallyConDrmTokenPolicy2
+        PallyConDrmTokenPolicy policy3 = new PallyConDrmTokenPolicy
                 .PolicyBuilder()
                 .externalKey(externalKeyTrue)
                 .build();
         logger.debug(objectMapper.writeValueAsString(policy3));
 
         logger.info("--------------exception check--------------");
-        PallyConDrmTokenPolicy2 policy2 = new PallyConDrmTokenPolicy2
+        PallyConDrmTokenPolicy policy2 = new PallyConDrmTokenPolicy
                 .PolicyBuilder()
                 .externalKey(externalKeyFalse)
                 .build();
         logger.debug(objectMapper.writeValueAsString(policy2));
+
+    }
+
+    @Test
+    public void externalKeyTest() throws PallyConTokenException, JsonProcessingException {
+        // mpegCenc iv 값 은 default 가 아님,, 체크하는지 안하는지 확인해야 됨ㅎ
+        ExternalKeyPolicyMpegCenc mpegCenc = new ExternalKeyPolicyMpegCenc(
+                TrackType.ALL_VIDEO,
+                "d5f1a1aa55546666d5f1a1aa55546666",
+                "11b11af515c10000fff111a1aef51510"
+        );
+        ExternalKeyPolicy externalKeyPolicy = new ExternalKeyPolicy()
+                .mpegCenc(mpegCenc);
+        PallyConDrmTokenPolicy policy = new PallyConDrmTokenPolicy
+                .PolicyBuilder()
+                .externalKey(externalKeyPolicy)
+                .build();
+
+        logger.debug(mpegCenc.getIv());
+        logger.debug(policy.toJsonString());
 
     }
 }

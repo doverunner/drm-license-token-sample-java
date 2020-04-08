@@ -9,7 +9,6 @@ import lombok.Data;
 /**
  * Created By NY on 2020-01-14.
  */
-@Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({"track_type", "key", "iv"})
 public class ExternalKeyPolicyHlsAes {
@@ -21,16 +20,21 @@ public class ExternalKeyPolicyHlsAes {
     @JsonProperty("iv")
     private String iv;
 
-    @Deprecated
-    public ExternalKeyPolicyHlsAes(String key, String iv) {
-        this.key = key;
-        this.iv = iv;
-    }
-
-    //TODO CHANGE CONSTRUCTOR TO THIS
     public ExternalKeyPolicyHlsAes(TrackType trackType, String key, String iv) {
         this.trackType = trackType;
         this.key = key;
         this.iv = iv;
+    }
+
+    public String getTrackType() {
+        return trackType.getValue();
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public String getIv() {
+        return iv;
     }
 }

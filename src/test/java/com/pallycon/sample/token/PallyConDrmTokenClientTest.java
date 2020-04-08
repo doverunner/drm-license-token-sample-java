@@ -3,6 +3,7 @@ package com.pallycon.sample.token;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.pallycon.sample.config.Config;
 import com.pallycon.sample.exception.PallyConTokenException;
+import com.pallycon.sample.test.TrackType;
 import com.pallycon.sample.token.policy.ExternalKeyPolicy;
 import com.pallycon.sample.token.policy.ExternalKeyPolicyHlsAes;
 import com.pallycon.sample.token.policy.ExternalKeyPolicyMpegCenc;
@@ -43,11 +44,13 @@ public class PallyConDrmTokenClientTest {
         security.getOutputProtect().setControlHdcp(2);
 
         //set external key
-        externalKey.setHlsAes(new ExternalKeyPolicyHlsAes(
+        externalKey.hlsAes(new ExternalKeyPolicyHlsAes(
+                TrackType.ALL,
                 "1111aaef51510000ffff1111aaef5151",
                 "11115555444477776666000033332222"
         ));
-        externalKey.setMpegCenc(new ExternalKeyPolicyMpegCenc(
+        externalKey.mpegCenc(new ExternalKeyPolicyMpegCenc(
+                TrackType.ALL,
                 "d5f1a1aa55546666d5f1a1aa55546666",
                 "11b11af515c10000fff111a1aef51510",
                 "11b11af515c10000fff111a1aef51510"

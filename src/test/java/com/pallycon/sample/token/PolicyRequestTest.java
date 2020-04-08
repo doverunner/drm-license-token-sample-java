@@ -2,6 +2,7 @@ package com.pallycon.sample.token;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.pallycon.sample.exception.PallyConTokenException;
+import com.pallycon.sample.test.TrackType;
 import com.pallycon.sample.token.policy.*;
 import org.junit.Before;
 import org.junit.Test;
@@ -48,11 +49,12 @@ public class PolicyRequestTest {
         logger.info("start to set up the external");
 
         external = new ExternalKeyPolicy();
-        external.setHlsAes(new ExternalKeyPolicyHlsAes(
+        external.hlsAes(new ExternalKeyPolicyHlsAes(
+                TrackType.ALL,
                 "1111aaef51510000ffff1111aaef5151",
                 "11115555444477776666000033332222"
         ));
-        external.setNcg(new ExternalKeyPolicyNcg("1111aaef5151001111555544447777666600003333222200ffff1111aaef5151"));
+        external.ncg(new ExternalKeyPolicyNcg("1111aaef5151001111555544447777666600003333222200ffff1111aaef5151"));
 
         logger.info("end of set up the external");
     }
@@ -109,9 +111,10 @@ public class PolicyRequestTest {
     public void getExternalKey() throws PallyConTokenException, JsonProcessingException {
         setExternal();
         PallyConDrmTokenPolicy policyRequest = new PallyConDrmTokenPolicy.PolicyBuilder().externalKey(external).build();
-        assertEquals("11115555444477776666000033332222", policyRequest.getExternalKey().getHlsAes().getIv());
+//        assertEquals("11115555444477776666000033332222", policyRequest.getExternalKey().getHlsAesList()..getIv());
 
-        external.setMpegCenc(new ExternalKeyPolicyMpegCenc(
+        external.mpegCenc(new ExternalKeyPolicyMpegCenc(
+                TrackType.ALL,
                 "d5f1a1aa55546666d5f1a1aa55546666",
                 "11b11af515c10000fff111a1aef51510",
                 "11b11af515c10000fff111a1aef51510"
