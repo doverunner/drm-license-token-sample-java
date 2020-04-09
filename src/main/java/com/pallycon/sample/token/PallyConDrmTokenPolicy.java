@@ -87,9 +87,13 @@ public class PallyConDrmTokenPolicy {
         }
     } //----------------------------- end of builder pattern
 
-    public String toJsonString() throws JsonProcessingException {
+    public String toJsonString() throws PallyConTokenException {
         ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.writeValueAsString(this);
+        try {
+            return objectMapper.writeValueAsString(this);
+        } catch (JsonProcessingException e) {
+            throw new PallyConTokenException("2001");
+        }
     }
 
     public PlaybackPolicy getPlaybackPolicy() {

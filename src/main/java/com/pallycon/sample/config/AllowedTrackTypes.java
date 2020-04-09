@@ -1,6 +1,4 @@
-package com.pallycon.sample.test;
-
-import com.pallycon.sample.exception.PallyConTokenException;
+package com.pallycon.sample.config;
 
 /**
  * for @playback_policy @allowed_track_types

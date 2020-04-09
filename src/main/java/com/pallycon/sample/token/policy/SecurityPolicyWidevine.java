@@ -3,10 +3,10 @@ package com.pallycon.sample.token.policy;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.pallycon.sample.test.security.widevine.HdcpSrmRule;
-import com.pallycon.sample.test.security.widevine.RequiredCgmsFlags;
-import com.pallycon.sample.test.security.widevine.RequiredHdcpVersion;
-import com.pallycon.sample.test.security.widevine.WidevineSecurityLevel;
+import com.pallycon.sample.config.security.widevine.HdcpSrmRule;
+import com.pallycon.sample.config.security.widevine.RequiredCgmsFlags;
+import com.pallycon.sample.config.security.widevine.RequiredHdcpVersion;
+import com.pallycon.sample.config.security.widevine.WidevineSecurityLevel;
 
 /**
  * @related security_policy

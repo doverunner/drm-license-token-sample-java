@@ -1,12 +1,8 @@
 package com.pallycon.sample.token;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.pallycon.sample.exception.PallyConTokenException;
 
-/**
- * Created By NY on 2020-01-16.
- */
 public interface PallyConDrmToken {
-    String toJsonString() throws JsonProcessingException;
 
     String getDrmType();
 
@@ -22,5 +18,6 @@ public interface PallyConDrmToken {
 
     String getAccessKey();
 
+    String toJsonString() throws PallyConTokenException;
 
 }

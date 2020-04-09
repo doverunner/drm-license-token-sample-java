@@ -1,4 +1,4 @@
-package com.pallycon.sample.test.security.widevine;
+package com.pallycon.sample.config.security.widevine;
 
 /**
  * for @security_policy @widevine @hdcp_srm_rule

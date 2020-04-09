@@ -1,13 +1,11 @@
-package com.pallycon.sample.test.security.playready;
+package com.pallycon.sample.config.security.playready;
 
 /**
  * for @security_policy @playready @security_level @analog_video_protection_level
  */
 public enum CompressedDigitalAudioProtection {
     LEVEL_100(100),
-    LEVEL_150(150),
-    LEVEL_200(200),
-    LEVEL_201(201);
+    LEVEL_301(301);
 
     private int value;
 

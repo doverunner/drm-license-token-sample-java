@@ -1,4 +1,4 @@
-package com.pallycon.sample.test.security.playready;
+package com.pallycon.sample.config.security.playready;
 
 /**
  * for @security_policy @playready @uncompressed_digital_audio_protection_level

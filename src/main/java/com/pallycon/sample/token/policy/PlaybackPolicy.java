@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.pallycon.sample.exception.PallyConTokenException;
-import com.pallycon.sample.test.AllowedTrackTypes;
+import com.pallycon.sample.config.AllowedTrackTypes;
 
 import java.util.regex.Pattern;
 

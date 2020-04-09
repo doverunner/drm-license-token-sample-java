@@ -3,7 +3,7 @@ package com.pallycon.sample.token.policy;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.pallycon.sample.test.security.playready.*;
+import com.pallycon.sample.config.security.playready.*;
 
 /**
  * @related security_policy

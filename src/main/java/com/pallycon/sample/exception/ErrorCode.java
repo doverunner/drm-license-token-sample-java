@@ -67,6 +67,9 @@ public class ErrorCode {
             case "1022":
                 this.errorMessage = "Ncg : The Cek should be 32byte hex String";
                 break;
+            case "2001":
+                this.errorMessage = "json parser error";
+                break;
         }
     }
 

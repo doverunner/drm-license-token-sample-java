@@ -1,4 +1,4 @@
-package com.pallycon.sample.test;
+package com.pallycon.sample.config;
 
 /**
  * for @security_policy @control_hdcp
