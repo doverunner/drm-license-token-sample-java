@@ -57,7 +57,7 @@ public class PlaybackPolicy {
 
     public void check() throws PallyConTokenException {
         if (!"".equals(this.expireDate) && !checkDates(this.expireDate)) {
-            throw new PallyConTokenException("1009");
+            throw new PallyConTokenException("1011");
         }
     }
 

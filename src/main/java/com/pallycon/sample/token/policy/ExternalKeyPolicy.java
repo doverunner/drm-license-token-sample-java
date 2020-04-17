@@ -14,9 +14,6 @@ import java.util.regex.Pattern;
  */
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-// public class ExternalKeyRequest
-// public class ExternalKeyMpegCenc
-// public class AmazonSQSAsyncClientBuilder
 public class ExternalKeyPolicy {
 
     @JsonProperty("mpeg_cenc")
@@ -33,8 +30,8 @@ public class ExternalKeyPolicy {
 
     //constructor
     public ExternalKeyPolicy() {
-        this.mpegCencList = new ArrayList();
-        this.hlsAesList = new ArrayList();
+        this.mpegCencList = new ArrayList<ExternalKeyPolicyMpegCenc>();
+        this.hlsAesList = new ArrayList<ExternalKeyPolicyHlsAes>();
     }
 
     //setter
@@ -100,19 +97,25 @@ public class ExternalKeyPolicy {
         if (null != this.ncg) {
             checkNcg();
         }
+
+        if (0 == this.mpegCencList.size()
+                && 0 == this.hlsAesList.size()
+                && null == this.ncg) {
+            throw new PallyConTokenException("1018");
+        }
     }
 
     //check each fields
     private void checkMpegCenc() throws PallyConTokenException{
         for (ExternalKeyPolicyMpegCenc mpegCenc : this.mpegCencList) {
             if (!checkHex16(mpegCenc.getKeyId())) {
-                throw new PallyConTokenException("1019");
+                throw new PallyConTokenException("1040");
             }
             if (!checkHex16(mpegCenc.getKey())) {
-                throw new PallyConTokenException("1020");
+                throw new PallyConTokenException("1041");
             }
             if (null != mpegCenc.getIv() && !checkHex16(mpegCenc.getIv())) {
-                throw new PallyConTokenException("1021");
+                throw new PallyConTokenException("1042");
             }
         }
     }
@@ -120,17 +123,17 @@ public class ExternalKeyPolicy {
     private void checkHlsAes() throws PallyConTokenException {
         for (ExternalKeyPolicyHlsAes hlsAes : this.hlsAesList) {
             if (!checkHex32(hlsAes.getKey())) {
-                throw new PallyConTokenException("1017");
+                throw new PallyConTokenException("1044");
             }
             if (!checkHex32(hlsAes.getIv())) {
-                throw new PallyConTokenException("1018");
+                throw new PallyConTokenException("1045");
             }
         }
     }
 
     private void checkNcg() throws PallyConTokenException{
         if (!checkHex32(this.ncg.getCek())) {
-            throw new PallyConTokenException("1022");
+            throw new PallyConTokenException("1047");
         }
     }
 

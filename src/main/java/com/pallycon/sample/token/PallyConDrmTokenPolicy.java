@@ -46,7 +46,7 @@ public class PallyConDrmTokenPolicy {
 
         public PolicyBuilder() {
             this.playbackPolicy = new PlaybackPolicy();
-            this.securityPolicy = new ArrayList<>();
+            this.securityPolicy = new ArrayList<SecurityPolicy>();
         }
 
         public PolicyBuilder playbackPolicy(PlaybackPolicy playbackPolicy) {

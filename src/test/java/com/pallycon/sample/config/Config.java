@@ -1,13 +1,12 @@
 package com.pallycon.sample.config;
 
 /**
- * Created By NY on 2020-01-13.
  * needed to be set before compile
  */
 public class Config {
-    public static final String SITE_KEY = "FDs3PWlU5WlU5D8oLl8oLlFWkCs3PWkC";
-    public static final String ACCESS_KEY = "FDs3PLT2FVJDp4Di18z6lzv3DKvNOP20";
-    public static final String SITE_ID = "TEST";
-    public static final String USER_ID = "tester";
-    public static final String C_ID = "big-buck-bunny_trailer";
+    public static final String SITE_KEY = "<Site Key>";
+    public static final String ACCESS_KEY = "<Access Key>";
+    public static final String SITE_ID = "<Site ID>";
+    public static final String USER_ID = "<tester-user>";
+    public static final String C_ID = "<Content ID>";
 }

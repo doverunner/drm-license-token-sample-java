@@ -1,10 +1,7 @@
 package com.pallycon.sample;
 
-import com.pallycon.sample.config.Config;
+import com.pallycon.sample.config.*;
 import com.pallycon.sample.exception.PallyConTokenException;
-import com.pallycon.sample.config.NcgControlHdcp;
-import com.pallycon.sample.config.ResponseFormat;
-import com.pallycon.sample.config.TrackType;
 import com.pallycon.sample.config.security.playready.AnalogVideoProtection;
 import com.pallycon.sample.config.security.playready.CompressedDigitalAudioProtection;
 import com.pallycon.sample.config.security.playready.UnCompressedDigitalAudioProtection;
@@ -15,6 +12,7 @@ import com.pallycon.sample.token.PallyConDrmTokenClient;
 import com.pallycon.sample.token.PallyConDrmTokenPolicy;
 import com.pallycon.sample.token.policy.*;
 import com.pallycon.sample.v2.PolicyTest;
+import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,7 +33,7 @@ public class PallyConDrmTokenSampleTest {
      * */
 
     @Test
-    public void makeToken(){
+    public void makeToken() {
 
         /**
          * @param licenseToken creates a token for Multi Drm license request.
@@ -53,15 +51,17 @@ public class PallyConDrmTokenSampleTest {
          * @param security_policy
          * @param external_key
          * */
+        PlaybackPolicy playbackPolicy = new PlaybackPolicy();
+        SecurityPolicy securityPolicyForSD = new SecurityPolicy();
+        SecurityPolicy securityPolicyForHD = new SecurityPolicy();
+        ExternalKeyPolicy externalKeyPolicy = new ExternalKeyPolicy();
 
         // setup ExternalKeyPolicy
         ExternalKeyPolicyMpegCenc mpegCenc = new ExternalKeyPolicyMpegCenc(
                 TrackType.ALL_VIDEO,
-                "d5f1a1aa55546666d5f1a1aa55546666",
-                "11b11af515c10000fff111a1aef51510"
+                "<Key ID>",
+                "<Key>"
         );
-        ExternalKeyPolicy externalKeyPolicy = new ExternalKeyPolicy()
-                .mpegCenc(Arrays.asList(mpegCenc, mpegCenc, mpegCenc));
 
         // setup SecurityPolicy
         /** creates SD track for securityPolicy */
@@ -74,11 +74,7 @@ public class PallyConDrmTokenSampleTest {
                 .compressedDigitalAudioProtection(CompressedDigitalAudioProtection.LEVEL_301)
                 .analogVideoProtection(AnalogVideoProtection.LEVEL_150)
                 .uncompressedDigitalAudioProtection(UnCompressedDigitalAudioProtection.LEVEL_100);
-        SecurityPolicy securityPolicyForSD = new SecurityPolicy()
-                .widevine(widevineForSD)
-                .fairplay(fairplayForSD)
-                .playready(playreadyForSD)
-                .trackType(TrackType.SD);
+
 
         /** creates HD track for securityPolicy */
         SecurityPolicyWidevine widevineForHD = new SecurityPolicyWidevine()
@@ -88,16 +84,25 @@ public class PallyConDrmTokenSampleTest {
         SecurityPolicyFairplay fairplayForHD = new SecurityPolicyFairplay();
         SecurityPolicyNcg ncgForHD = new SecurityPolicyNcg()
                 .allowExternalDisplay(true)
-                .controlHdcp(NcgControlHdcp.HDCP_OVER_VER_2_2);
+                .controlHdcp(NcgControlHdcp.HDCP_V2_2);
 
-        SecurityPolicy securityPolicyForHD = new SecurityPolicy()
+        playbackPolicy
+                .allowedTrackTypes(AllowedTrackTypes.SD_UHD1)
+                .licenseDuration(60);
+        securityPolicyForSD
+                .widevine(widevineForSD)
+                .fairplay(fairplayForSD)
+                .playready(playreadyForSD)
+                .trackType(TrackType.SD);
+        securityPolicyForHD
                 .widevine(widevineForHD)
                 .fairplay(fairplayForHD)
                 .ncg(ncgForHD)
                 .trackType(TrackType.HD);
+        externalKeyPolicy.mpegCenc(Arrays.asList(mpegCenc, mpegCenc, mpegCenc));
+
 
         try {
-
             /**
              * 2. build policy
              * */
@@ -117,9 +122,9 @@ public class PallyConDrmTokenSampleTest {
                     .siteKey(Config.SITE_KEY)
                     .accessKey(Config.ACCESS_KEY)
                     .widevine()
-                    .siteId("TEST")
-                    .cId("disney-animation")
-                    .userId("test1234")
+                    .siteId(Config.SITE_ID)
+                    .cId(Config.C_ID)
+                    .userId(Config.USER_ID)
                     .policy(policy)
                     .responseFormat(ResponseFormat.CUSTOM);
             logger.info("---------------tokenJson---------------");

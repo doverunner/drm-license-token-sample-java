@@ -52,19 +52,19 @@ public class PolicyTest {
     public void externalKeyListTest() throws PallyConTokenException, JsonProcessingException {
         ExternalKeyPolicyMpegCenc mpegCenc = new ExternalKeyPolicyMpegCenc(
                 TrackType.ALL_VIDEO,
-                "d5f1a1aa55546666d5f1a1aa55546666",
-                "11b11af515c10000fff111a1aef51510"
+                "<Key ID>",
+                "<Key>"
         );
         ExternalKeyPolicyMpegCenc mpegCenc2 = new ExternalKeyPolicyMpegCenc(
                 TrackType.HD,
-                "d5f1a1aa55546666d5f1a1aa55546666",
-                "d5f1a1aa55546666d5f1a1aa55546666",
-                "11b11af515c10000fff111a1aef51510"
+                "<Key ID>",
+                "<Key>",
+                "<iv>"
         );
         ExternalKeyPolicyMpegCenc mpegCenc3 = new ExternalKeyPolicyMpegCenc(
                 TrackType.UHD2,
-                "d5f1a1aa55546666d5f1a1aa55546666",
-                "11b11af515c10000fff111a1aef51510"
+                "<Key ID>",
+                "<Key>"
         );
         ExternalKeyPolicy externalKeyPolicyWithAdd = new ExternalKeyPolicy()
                 .mpegCenc(mpegCenc)

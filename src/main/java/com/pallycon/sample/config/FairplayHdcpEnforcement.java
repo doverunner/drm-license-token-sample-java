@@ -6,8 +6,8 @@ package com.pallycon.sample.config;
 public enum FairplayHdcpEnforcement {
 
     HDCP_NONE("HDCP_NONE", -1),
-    HDCP_ANY("HDCP_ANY", 0),
-    HDCP_OVER_VER_2_2("HDCP_OVER_VER_2_2", 1);
+    HDCP_TYPE_0("HDCP_TYPE_0", 0),
+    HDCP_TYPE_2("HDCP_TYPE_2", 1);
 
     private String type;
     private int value;

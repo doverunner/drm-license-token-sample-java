@@ -134,7 +134,6 @@ public class PallyConDrmTokenClient implements PallyConDrmToken {
         bf.append(this.userId);
         bf.append(this.cId);
         bf.append(this.encPolicy);
-        bf.append(this.responseFormat);
         bf.append(this.timestamp);
         MessageDigest digest = MessageDigest.getInstance("SHA-256");
         byte[] bytes = digest.digest(bf.toString().getBytes(StandardCharsets.UTF_8));
