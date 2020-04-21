@@ -22,13 +22,13 @@ public class PlaybackPolicy {
     private String expireDate;
 
     @JsonProperty("allowed_track_types")
-    private AllowedTrackTypes allowedTrackTypes;
+    private String allowedTrackTypes;
 
     public PlaybackPolicy() {
         this.persistent = false;
         this.licenseDuration = 0;
         this.expireDate = "";
-        this.allowedTrackTypes = AllowedTrackTypes.SD_HD;
+        this.allowedTrackTypes = AllowedTrackTypes.SD_HD.getValue();
     }
 
 
@@ -51,7 +51,7 @@ public class PlaybackPolicy {
     }
 
     public PlaybackPolicy allowedTrackTypes(AllowedTrackTypes allowedTrackTypes) {
-        this.allowedTrackTypes = allowedTrackTypes;
+        this.allowedTrackTypes = allowedTrackTypes.getValue();
         return this;
     }
 
@@ -82,7 +82,7 @@ public class PlaybackPolicy {
         return expireDate;
     }
 
-    public AllowedTrackTypes getAllowedTrackTypes() {
+    public String getAllowedTrackTypes() {
         return allowedTrackTypes;
     }
 }

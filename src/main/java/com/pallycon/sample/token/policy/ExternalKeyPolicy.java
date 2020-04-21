@@ -122,10 +122,10 @@ public class ExternalKeyPolicy {
 
     private void checkHlsAes() throws PallyConTokenException {
         for (ExternalKeyPolicyHlsAes hlsAes : this.hlsAesList) {
-            if (!checkHex32(hlsAes.getKey())) {
+            if (!checkHex16(hlsAes.getKey())) {
                 throw new PallyConTokenException("1044");
             }
-            if (!checkHex32(hlsAes.getIv())) {
+            if (!checkHex16(hlsAes.getIv())) {
                 throw new PallyConTokenException("1045");
             }
         }
