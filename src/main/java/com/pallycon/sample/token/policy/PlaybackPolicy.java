@@ -28,7 +28,7 @@ public class PlaybackPolicy {
         this.persistent = false;
         this.licenseDuration = 0;
         this.expireDate = "";
-        this.allowedTrackTypes = AllowedTrackTypes.SD_HD.getValue();
+        this.allowedTrackTypes = AllowedTrackTypes.ALL.getValue();
     }
 
 

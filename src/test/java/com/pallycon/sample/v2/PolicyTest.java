@@ -58,7 +58,7 @@ public class PolicyTest {
                     "\"policy_version\":2," +
                     "\"playback_policy\":{" +
                         "\"persistent\":false,\"license_duration\":0," +
-                        "\"expire_date\":\"\",\"allowed_track_types\":\"SD_HD\"" +
+                        "\"expire_date\":\"\",\"allowed_track_types\":\"ALL\"" +
                     "}," +
                     "\"security_policy\":[" +
                         securityStr +
@@ -70,8 +70,8 @@ public class PolicyTest {
             Assert.assertFalse(playbackPolicy.getPersistent());
             Assert.assertSame(0, playbackPolicy.getLicenseDuration());
             Assert.assertEquals("", playbackPolicy.getExpireDate());
-            Assert.assertEquals("SD_HD", playbackPolicy.getAllowedTrackTypes());
-            Assert.assertEquals(AllowedTrackTypes.SD_HD.getValue(), playbackPolicy.getAllowedTrackTypes());
+            Assert.assertEquals("ALL", playbackPolicy.getAllowedTrackTypes());
+            Assert.assertEquals(AllowedTrackTypes.ALL.getValue(), playbackPolicy.getAllowedTrackTypes());
 
 
             Assert.assertEquals(securityStr, objectMapper.writeValueAsString(securityPolicy));

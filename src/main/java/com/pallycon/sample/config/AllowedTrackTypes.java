@@ -5,6 +5,7 @@ package com.pallycon.sample.config;
  */
 public enum AllowedTrackTypes {
 
+    ALL("ALL"),
     SD_ONLY("SD_ONLY"),
     SD_HD("SD_HD"),
     SD_UHD1("SD_UHD1"),
