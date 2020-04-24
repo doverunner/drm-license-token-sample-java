@@ -2,21 +2,28 @@ package com.pallycon.sample.token;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pallycon.sample.exception.PallyConTokenException;
+import com.pallycon.sample.config.ResponseFormat;
 import com.pallycon.sample.util.StringEncrypter;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.Base64;
 import java.util.Date;
 import java.util.TimeZone;
 
 /**
- * Created By NY on 2020-01-14.
+ * constructs token for license server
  */
+
+@JsonPropertyOrder({
+        "drm_type", "site_id", "user_id", "cid", "policy", "response_format", "timestamp", "hash"
+})
 public class PallyConDrmTokenClient implements PallyConDrmToken {
 
     /**
@@ -26,6 +33,7 @@ public class PallyConDrmTokenClient implements PallyConDrmToken {
      *  @param userId
      *  @param cId
      *  @param policy
+     *  @param responseFormat
      *  @param timestamp
      *  @param hash BEFORE SET hash, other fields are prerequisite.
      * */
@@ -40,6 +48,8 @@ public class PallyConDrmTokenClient implements PallyConDrmToken {
     private String cId;
     @JsonProperty("policy")
     private String encPolicy;
+    @JsonProperty("response_format")
+    private String responseFormat = ResponseFormat.ORIGINAL.getValue();
     @JsonProperty("timestamp")
     private String timestamp;
     @JsonProperty("hash")
@@ -97,10 +107,15 @@ public class PallyConDrmTokenClient implements PallyConDrmToken {
         return this;
     }
 
-    public PallyConDrmTokenClient policy(PolicyRequest policyRequest) throws Exception {
+    public PallyConDrmTokenClient policy(PallyConDrmTokenPolicy policyRequest) throws PallyConTokenException, Exception {
         this.policy = policyRequest.toJsonString();
         StringEncrypter stringEncrypter = new StringEncrypter(this.siteKey, AES_IV);
-        this.encPolicy = stringEncrypter.encrypt(policyRequest.toJsonString());
+        this.encPolicy = stringEncrypter.encrypt(this.policy);
+        return this;
+    }
+
+    public PallyConDrmTokenClient responseFormat(ResponseFormat responseFormat) {
+        this.responseFormat = responseFormat.getValue();
         return this;
     }
 
@@ -111,7 +126,7 @@ public class PallyConDrmTokenClient implements PallyConDrmToken {
         return this;
     }
 
-    private PallyConDrmTokenClient hash() throws Exception {
+    private PallyConDrmTokenClient hash() throws NoSuchAlgorithmException {
         StringBuffer bf = new StringBuffer();
         bf.append(this.accessKey);
         bf.append(this.drmType);
@@ -126,7 +141,7 @@ public class PallyConDrmTokenClient implements PallyConDrmToken {
         return this;
     }
 
-    public String execute() throws PallyConTokenException, JsonProcessingException, Exception {
+    public String execute() {
         String result = "";
 
         try {
@@ -135,6 +150,8 @@ public class PallyConDrmTokenClient implements PallyConDrmToken {
             hash();
             result = Base64.getEncoder().encodeToString(this.toJsonString().getBytes());
         } catch (PallyConTokenException e) {
+            result = e.getMessage();
+        } catch (Exception e) {
             result = e.getMessage();
         }
 
@@ -162,13 +179,14 @@ public class PallyConDrmTokenClient implements PallyConDrmToken {
         }
     }
 
-
-
-
     @Override
-    public String toJsonString() throws JsonProcessingException {
+    public String toJsonString() throws PallyConTokenException {
         ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.writeValueAsString(this);
+        try {
+            return objectMapper.writeValueAsString(this);
+        } catch (JsonProcessingException e) {
+            throw new PallyConTokenException("2001");
+        }
     }
 
     @Override

@@ -5,7 +5,7 @@
 
     <groupId>com.pallycon</groupId>
     <artifactId>pallycon-token-sample</artifactId>
-    <version>1.0.0</version>
+    <version>1.2.0</version>
     <name>sample</name>
     <description>PallyCon Token Java Sample project</description>
 
