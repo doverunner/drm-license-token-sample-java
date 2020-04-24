@@ -15,18 +15,15 @@ import com.pallycon.sample.config.FairplayHdcpEnforcement;
 public class SecurityPolicyFairplay {
 
     @JsonProperty("hdcp_enforcement")
-    private int hdcpEnforcement;
+    private Integer hdcpEnforcement;
 
     @JsonProperty("allow_airplay")
-    private boolean allowAirplay;
+    private Boolean allowAirplay;
 
     @JsonProperty("allow_av_adapter")
-    private boolean allowAvAdapter;
+    private Boolean allowAvAdapter;
 
     public SecurityPolicyFairplay() {
-        this.hdcpEnforcement = FairplayHdcpEnforcement.HDCP_NONE.getValue();
-        this.allowAirplay = true;
-        this.allowAvAdapter = true;
     }
 
     public SecurityPolicyFairplay hdcpEnforcement(FairplayHdcpEnforcement hdcpEnforcement) {
@@ -42,15 +39,15 @@ public class SecurityPolicyFairplay {
         return this;
     }
 
-    public int getHdcpEnforcement() {
+    public Integer getHdcpEnforcement() {
         return hdcpEnforcement;
     }
 
-    public boolean getAllowAirplay() {
+    public Boolean getAllowAirplay() {
         return allowAirplay;
     }
 
-    public boolean getAllowAvAdapter() {
+    public Boolean getAllowAvAdapter() {
         return allowAvAdapter;
     }
 }

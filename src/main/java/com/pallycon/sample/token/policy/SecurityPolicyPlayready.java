@@ -16,29 +16,24 @@ import com.pallycon.sample.config.security.playready.*;
 public class SecurityPolicyPlayready {
 
     @JsonProperty("security_level")
-    private int securityLevel;
+    private Integer securityLevel;
 
     @JsonProperty("digital_video_protection_level")
-    private int digitalVideoProtection;
+    private Integer digitalVideoProtection;
 
     @JsonProperty("analog_video_protection_level")
-    private int analogVideoProtection;
+    private Integer analogVideoProtection;
 
     @JsonProperty("compressed_digital_audio_protection_level")
-    private int compressedDigitalAudioProtection;
+    private Integer compressedDigitalAudioProtection;
 
     @JsonProperty("uncompressed_digital_audio_protection_level")
-    private int uncompressedDigitalAudioProtection;
+    private Integer uncompressedDigitalAudioProtection;
 
     @JsonProperty("require_hdcp_type_1")
-    private boolean requireHdcpType1;
+    private Boolean requireHdcpType1;
 
     public SecurityPolicyPlayready() {
-        this.securityLevel = PlayreadySecurityLevel.LEVEL_150.getValue();
-        this.digitalVideoProtection = DigitalVideoProtection.LEVEL_100.getValue();
-        this.analogVideoProtection = AnalogVideoProtection.LEVEL_100.getValue();
-        this.compressedDigitalAudioProtection = CompressedDigitalAudioProtection.LEVEL_100.getValue();
-        this.uncompressedDigitalAudioProtection = UnCompressedDigitalAudioProtection.LEVEL_100.getValue();
     }
 
     public SecurityPolicyPlayready securityLevel(PlayreadySecurityLevel securityLevel) {
@@ -71,27 +66,28 @@ public class SecurityPolicyPlayready {
         return this;
     }
 
-    public int getSecurityLevel() {
+    public Integer getSecurityLevel() {
         return securityLevel;
     }
 
-    public int getDigitalVideoProtection() {
+    public Integer getDigitalVideoProtection() {
         return digitalVideoProtection;
     }
 
-    public int getAnalogVideoProtection() {
+    public Integer getAnalogVideoProtection() {
         return analogVideoProtection;
     }
 
-    public int getCompressedDigitalAudioProtection() {
+    public Integer getCompressedDigitalAudioProtection() {
         return compressedDigitalAudioProtection;
     }
 
-    public int getUncompressedDigitalAudioProtection() {
+    public Integer getUncompressedDigitalAudioProtection() {
         return uncompressedDigitalAudioProtection;
     }
 
-    public boolean getRequireHdcpType1() {
+    public Boolean getRequireHdcpType1() {
         return requireHdcpType1;
     }
+
 }
