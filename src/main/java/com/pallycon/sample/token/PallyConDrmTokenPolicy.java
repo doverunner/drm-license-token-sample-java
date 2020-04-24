@@ -12,7 +12,6 @@ import com.pallycon.sample.token.policy.SecurityPolicy;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Create policy data for @ PallyConDrmToken
@@ -46,6 +45,8 @@ public class PallyConDrmTokenPolicy {
         private ExternalKeyPolicy externalKey;
 
         public PolicyBuilder() {
+            this.playbackPolicy = new PlaybackPolicy();
+            this.securityPolicy = new ArrayList<SecurityPolicy>();
         }
 
         public PolicyBuilder playbackPolicy(PlaybackPolicy playbackPolicy) {
@@ -57,7 +58,6 @@ public class PallyConDrmTokenPolicy {
             return this;
         }
         public PolicyBuilder securityPolicy(SecurityPolicy securityPolicy) {
-            this.securityPolicy = Optional.ofNullable(this.securityPolicy).orElse(new ArrayList<SecurityPolicy>());
             this.securityPolicy.add(securityPolicy);
             return this;
         }
@@ -67,19 +67,23 @@ public class PallyConDrmTokenPolicy {
         }
 
         public PallyConDrmTokenPolicy build() throws PallyConTokenException {
-            validate();
             PallyConDrmTokenPolicy policy = new PallyConDrmTokenPolicy(this);
+
+            // constructs default value of SecurityPolicy
+            if (this.securityPolicy.isEmpty()) {
+                this.securityPolicy.add(new SecurityPolicy());
+            }
+            validate();
             return policy;
         }
 
         private void validate() throws PallyConTokenException {
-            if (null != this.playbackPolicy) {
-                this.playbackPolicy.check();
-            }
+            this.playbackPolicy.check();
 
             if (null != this.externalKey) {
                 this.externalKey.check();
             }
+
         }
     } //----------------------------- end of builder pattern
 

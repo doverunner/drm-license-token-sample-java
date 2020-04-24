@@ -88,7 +88,6 @@ public class SampleTest {
         try {
             policy = new PallyConDrmTokenPolicy
                     .PolicyBuilder()
-                    .playbackPolicy(playbackPolicy)
                     .externalKey(externalKeyPolicy)
                     .securityPolicy(securityPolicyForSD)
                     .securityPolicy(securityPolicyForSD)
@@ -100,12 +99,12 @@ public class SampleTest {
              * 3. create token
              * */
             token = new PallyConDrmTokenClient()
-                	.widevine()
-                    .siteId("<Site ID>")
                     .siteKey("<Site Key>")
                     .accessKey("<Access Key>")
+                    .widevine()
+                    .siteId("<Site ID>")
+                    .cId("<Content ID>")
                     .userId("<tester-user>")
-                	.cId("<Content ID>")
                     .policy(policy)
                     .responseFormat(ResponseFormat.CUSTOM);
             logger.info("---------------tokenJson---------------");
@@ -124,23 +123,6 @@ public class SampleTest {
 ```
 
 After run the mothod, you can get the TOKEN you intended below the '--result--' string.  if there are minor mistakes when created, `result` will return error messages we already made on  `ErrorCode` or you can see the messages below. Follow the comment and fix the bugs. 
-
-For example, 
-
-```json
-{
-    "error_code": "1000",
-    "error_message": "Token err : The userId is Required"
-}
-```
-
-If you want to see All the error codes and error messages you would get, see the `pallycon\excepion\ErrorCode.java` . 
-
-
-
-
-
-We hope this guide would be helpful to generate DRM License Token to request PallyCon Multi-DRM Cloud Server where get the License issued from.
 
 
 

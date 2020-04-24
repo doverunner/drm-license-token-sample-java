@@ -13,10 +13,10 @@ import java.util.regex.Pattern;
 public class PlaybackPolicy {
 
     @JsonProperty("persistent")
-    private Boolean persistent;
+    private boolean persistent;
 
     @JsonProperty("license_duration")
-    private Integer licenseDuration;
+    private int licenseDuration;
 
     @JsonProperty("expire_date")
     private String expireDate;
@@ -25,6 +25,10 @@ public class PlaybackPolicy {
     private String allowedTrackTypes;
 
     public PlaybackPolicy() {
+        this.persistent = false;
+        this.licenseDuration = 0;
+        this.expireDate = "";
+        this.allowedTrackTypes = AllowedTrackTypes.ALL.getValue();
     }
 
 
@@ -52,9 +56,7 @@ public class PlaybackPolicy {
     }
 
     public void check() throws PallyConTokenException {
-        if (null != this.expireDate
-                && !"".equals(this.expireDate)
-                && !checkDates(this.expireDate)) {
+        if (!"".equals(this.expireDate) && !checkDates(this.expireDate)) {
             throw new PallyConTokenException("1011");
         }
     }
@@ -68,12 +70,11 @@ public class PlaybackPolicy {
     /**
      * getter
      * */
-
-    public Boolean getPersistent() {
+    public boolean getPersistent() {
         return persistent;
     }
 
-    public Integer getLicenseDuration() {
+    public int getLicenseDuration() {
         return licenseDuration;
     }
 

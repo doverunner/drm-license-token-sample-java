@@ -108,7 +108,6 @@ public class PallyConDrmTokenSampleTest {
              * */
             policy = new PallyConDrmTokenPolicy
                     .PolicyBuilder()
-                    .playbackPolicy(playbackPolicy)
                     .externalKey(externalKeyPolicy)
                     .securityPolicy(securityPolicyForSD)
                     .securityPolicy(securityPolicyForHD)
@@ -120,12 +119,12 @@ public class PallyConDrmTokenSampleTest {
              * 3. create token
              * */
             token = new PallyConDrmTokenClient()
-                    .widevine()
-                    .siteId(Config.SITE_ID)
                     .siteKey(Config.SITE_KEY)
                     .accessKey(Config.ACCESS_KEY)
-                    .userId(Config.USER_ID)
+                    .widevine()
+                    .siteId(Config.SITE_ID)
                     .cId(Config.C_ID)
+                    .userId(Config.USER_ID)
                     .policy(policy)
                     .responseFormat(ResponseFormat.CUSTOM);
             logger.info("---------------tokenJson---------------");

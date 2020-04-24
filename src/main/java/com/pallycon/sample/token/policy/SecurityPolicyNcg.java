@@ -14,13 +14,16 @@ import com.pallycon.sample.config.NcgControlHdcp;
 public class SecurityPolicyNcg {
 
     @JsonProperty("allow_mobile_abnormal_device")
-    private Boolean allowMobileAbnormalDevice;
+    private boolean allowMobileAbnormalDevice;
     @JsonProperty("allow_external_display")
-    private Boolean allowExternalDisplay;
+    private boolean allowExternalDisplay;
     @JsonProperty("control_hdcp")
-    private Integer controlHdcp;
+    private int controlHdcp;
 
     public SecurityPolicyNcg() {
+        this.allowMobileAbnormalDevice = false;
+        this.allowExternalDisplay = false;
+        this.controlHdcp = NcgControlHdcp.HDCP_NONE.getValue();
     }
 
     public SecurityPolicyNcg allowMobileAbnormalDevice(boolean allowMobileAbnormalDevice) {
@@ -36,15 +39,15 @@ public class SecurityPolicyNcg {
         return this;
     }
 
-    public Boolean getAllowMobileAbnormalDevice() {
+    public boolean getAllowMobileAbnormalDevice() {
         return allowMobileAbnormalDevice;
     }
 
-    public Boolean getAllowExternalDisplay() {
+    public boolean getAllowExternalDisplay() {
         return allowExternalDisplay;
     }
 
-    public Integer getControlHdcp() {
+    public int getControlHdcp() {
         return controlHdcp;
     }
 }

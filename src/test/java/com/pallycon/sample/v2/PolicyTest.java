@@ -3,11 +3,6 @@ package com.pallycon.sample.v2;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pallycon.sample.config.AllowedTrackTypes;
-import com.pallycon.sample.config.FairplayHdcpEnforcement;
-import com.pallycon.sample.config.security.playready.DigitalVideoProtection;
-import com.pallycon.sample.config.security.playready.PlayreadySecurityLevel;
-import com.pallycon.sample.config.security.widevine.RequiredHdcpVersion;
-import com.pallycon.sample.config.security.widevine.WidevineSecurityLevel;
 import com.pallycon.sample.exception.PallyConTokenException;
 import com.pallycon.sample.config.TrackType;
 import com.pallycon.sample.token.PallyConDrmTokenPolicy;
@@ -31,43 +26,39 @@ public class PolicyTest {
     @Test
     public void makePolicy() {
         ObjectMapper objectMapper = new ObjectMapper();
-        PlaybackPolicy playbackPolicy = new PlaybackPolicy()
-                .persistent(false)
-                .licenseDuration(60)
-                .allowedTrackTypes(AllowedTrackTypes.ALL);
-        SecurityPolicy securityPolicy = new SecurityPolicy()
-                .trackType(TrackType.ALL)
-                .widevine(new SecurityPolicyWidevine()
-                        .securityLevel(WidevineSecurityLevel.SW_SECURE_CRYPTO)
-                        .requiredHdcpVersion(RequiredHdcpVersion.HDCP_NONE))
-                .playready(new SecurityPolicyPlayready()
-                        .securityLevel(PlayreadySecurityLevel.LEVEL_150)
-                        .digitalVideoProtection(DigitalVideoProtection.LEVEL_100))
-                .fairplay(new SecurityPolicyFairplay()
-                        .hdcpEnforcement(FairplayHdcpEnforcement.HDCP_NONE)
-                        .allowAirplay(true)
-                        .allowAvAdapter(true));
+        PlaybackPolicy playbackPolicy = new PlaybackPolicy();
+        SecurityPolicy securityPolicy = new SecurityPolicy();
         String securityStr = "" +
                 "{" +
-                "\"track_type\":\"ALL\"," +
-                    "\"widevine\":{" +
-                    "\"security_level\":1," +
-                    "\"required_hdcp_version\":\"HDCP_NONE\"" +
-                    "}," +
-                    "\"playready\":{" +
-                    "\"security_level\":150," +
-                    "\"digital_video_protection_level\":100" +
-                    "}," +
-                    "\"fairplay\":{" +
-                    "\"hdcp_enforcement\":-1,\"allow_airplay\":true,\"allow_av_adapter\":true}"+
+        "\"track_type\":\"ALL\"," +
+                "\"widevine\":{" +
+                "\"security_level\":1," +
+                "\"required_hdcp_version\":\"HDCP_NONE\"," +
+                "\"required_cgms_flags\":\"CGMS_NONE\"," +
+                "\"disable_analog_output\":false," +
+                "\"hdcp_srm_rule\":\"HDCP_SRM_RULE_NONE\"" +
+                "}," +
+                "\"playready\":{" +
+                "\"security_level\":150," +
+                "\"digital_video_protection_level\":100," +
+                "\"analog_video_protection_level\":100," +
+                "\"compressed_digital_audio_protection_level\":100," +
+                "\"uncompressed_digital_audio_protection_level\":100," +
+                "\"require_hdcp_type_1\":false" +
+                "}," +
+                "\"fairplay\":{" +
+                "\"hdcp_enforcement\":-1,\"allow_airplay\":true,\"allow_av_adapter\":true}," +
+                "\"ncg\":{" +
+                "\"allow_mobile_abnormal_device\":false," +
+                "\"allow_external_display\":false,\"control_hdcp\":0}" +
                 "}";
 
         String policyStr = "" +
                 "{" +
                     "\"policy_version\":2," +
                     "\"playback_policy\":{" +
-                        "\"persistent\":false,\"license_duration\":60," +
-                        "\"allowed_track_types\":\"ALL\"" +
+                        "\"persistent\":false,\"license_duration\":0," +
+                        "\"expire_date\":\"\",\"allowed_track_types\":\"ALL\"" +
                     "}," +
                     "\"security_policy\":[" +
                         securityStr +
@@ -76,11 +67,9 @@ public class PolicyTest {
 
         try {
             logger.info("--------------check--------------");
-            logger.debug(objectMapper.writeValueAsString(playbackPolicy));
-            logger.debug(objectMapper.writeValueAsString(securityPolicy));
             Assert.assertFalse(playbackPolicy.getPersistent());
-            Assert.assertSame(60, playbackPolicy.getLicenseDuration());
-            Assert.assertNull(playbackPolicy.getExpireDate());
+            Assert.assertSame(0, playbackPolicy.getLicenseDuration());
+            Assert.assertEquals("", playbackPolicy.getExpireDate());
             Assert.assertEquals("ALL", playbackPolicy.getAllowedTrackTypes());
             Assert.assertEquals(AllowedTrackTypes.ALL.getValue(), playbackPolicy.getAllowedTrackTypes());
 
