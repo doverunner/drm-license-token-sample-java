@@ -11,8 +11,7 @@ import com.pallycon.sample.config.security.playready.*;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder(
         {"security_level", "digital_video_protection_level", "analog_video_protection_level",
-        "compressed_digital_audio_protection_level", "uncompressed_digital_audio_protection_level",
-        "require_hdcp_type_1"})
+        "digital_audio_protection_level", "require_hdcp_type_1"})
 public class SecurityPolicyPlayready {
 
     @JsonProperty("security_level")
@@ -24,11 +23,16 @@ public class SecurityPolicyPlayready {
     @JsonProperty("analog_video_protection_level")
     private Integer analogVideoProtection;
 
+    @Deprecated
     @JsonProperty("compressed_digital_audio_protection_level")
     private Integer compressedDigitalAudioProtection;
 
+    @Deprecated
     @JsonProperty("uncompressed_digital_audio_protection_level")
     private Integer uncompressedDigitalAudioProtection;
+
+    @JsonProperty("digital_audio_protection_level")
+    private Integer digitalAudioProtection;
 
     @JsonProperty("require_hdcp_type_1")
     private Boolean requireHdcpType1;
@@ -51,13 +55,20 @@ public class SecurityPolicyPlayready {
         return this;
     }
 
+    @Deprecated
     public SecurityPolicyPlayready compressedDigitalAudioProtection(CompressedDigitalAudioProtection compressedDigitalAudioProtection) {
         this.compressedDigitalAudioProtection = compressedDigitalAudioProtection.getValue();
         return this;
     }
 
+    @Deprecated
     public SecurityPolicyPlayready uncompressedDigitalAudioProtection(UnCompressedDigitalAudioProtection uncompressedDigitalAudioProtection) {
         this.uncompressedDigitalAudioProtection = uncompressedDigitalAudioProtection.getValue();
+        return this;
+    }
+
+    public SecurityPolicyPlayready digitalAudioProtection(DigitalAudioProtection digitalAudioProtection) {
+        this.digitalAudioProtection = digitalAudioProtection.getValue();
         return this;
     }
 
@@ -78,10 +89,12 @@ public class SecurityPolicyPlayready {
         return analogVideoProtection;
     }
 
+    @Deprecated
     public Integer getCompressedDigitalAudioProtection() {
         return compressedDigitalAudioProtection;
     }
 
+    @Deprecated
     public Integer getUncompressedDigitalAudioProtection() {
         return uncompressedDigitalAudioProtection;
     }
@@ -90,4 +103,7 @@ public class SecurityPolicyPlayready {
         return requireHdcpType1;
     }
 
+    public Integer getDigitalAudioProtection() {
+        return digitalAudioProtection;
+    }
 }
