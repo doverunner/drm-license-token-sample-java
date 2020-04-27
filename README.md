@@ -65,11 +65,8 @@ public class SampleTest {
                 .allowAirplay(false);
         SecurityPolicyPlayready playreadyForSD 
             = new SecurityPolicyPlayready()
-                .compressedDigitalAudioProtection(
-        		    CompressedDigitalAudioProtection.LEVEL_301)
-                .analogVideoProtection(AnalogVideoProtection.LEVEL_150)
-                .uncompressedDigitalAudioProtection(
-            		UnCompressedDigitalAudioProtection.LEVEL_100);
+                .digitalAudioProtection(DigitalAudioProtection.LEVEL_250)
+                .analogVideoProtection(AnalogVideoProtection.LEVEL_150);
         //constructs subpolicies for SecurityPolicy
         securityPolicy
                 .widevine(widevineForSD)

@@ -1,10 +1,9 @@
 package com.pallycon.sample.config.security.playready;
 
 /**
- * for @security_policy @playready @uncompressed_digital_audio_protection_level
+ * for @security_policy @security_level @playready
  */
-@Deprecated
-public enum UnCompressedDigitalAudioProtection {
+public enum DigitalAudioProtection {
 
     LEVEL_100(100),
     LEVEL_250(250),
@@ -14,7 +13,7 @@ public enum UnCompressedDigitalAudioProtection {
 
     private int value;
 
-    UnCompressedDigitalAudioProtection(int value) {
+    DigitalAudioProtection(int value) {
         this.value = value;
     }
 

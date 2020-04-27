@@ -1,10 +1,9 @@
 package com.pallycon.sample;
 
 import com.pallycon.sample.config.*;
+import com.pallycon.sample.config.security.playready.DigitalAudioProtection;
 import com.pallycon.sample.exception.PallyConTokenException;
 import com.pallycon.sample.config.security.playready.AnalogVideoProtection;
-import com.pallycon.sample.config.security.playready.CompressedDigitalAudioProtection;
-import com.pallycon.sample.config.security.playready.UnCompressedDigitalAudioProtection;
 import com.pallycon.sample.config.security.widevine.RequiredCgmsFlags;
 import com.pallycon.sample.config.security.widevine.RequiredHdcpVersion;
 import com.pallycon.sample.config.security.widevine.WidevineSecurityLevel;
@@ -12,7 +11,6 @@ import com.pallycon.sample.token.PallyConDrmTokenClient;
 import com.pallycon.sample.token.PallyConDrmTokenPolicy;
 import com.pallycon.sample.token.policy.*;
 import com.pallycon.sample.v2.PolicyTest;
-import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -71,9 +69,8 @@ public class PallyConDrmTokenSampleTest {
         SecurityPolicyFairplay fairplayForSD = new SecurityPolicyFairplay()
                 .allowAirplay(false);
         SecurityPolicyPlayready playreadyForSD = new SecurityPolicyPlayready()
-                .compressedDigitalAudioProtection(CompressedDigitalAudioProtection.LEVEL_301)
-                .analogVideoProtection(AnalogVideoProtection.LEVEL_150)
-                .uncompressedDigitalAudioProtection(UnCompressedDigitalAudioProtection.LEVEL_100);
+                .digitalAudioProtection(DigitalAudioProtection.LEVEL_250)
+                .analogVideoProtection(AnalogVideoProtection.LEVEL_150);
 
 
         /** creates HD track for securityPolicy */
