@@ -2,16 +2,35 @@
 
 
 
-### 환경
+### IDE
 
-- JAVA JDK 1.8 이상
+- JAVA JDK 1.8 +
 
 
 
-#### logback 설정 관련
+#### log settings
 
-- `logbackProperties.properties` 에서 저장할 장소 세팅
+- `logbackProperties.properties`
 - `logback.xml`
+
+
+
+### Directories
+
+| dir                                |            | description                |
+| ---------------------------------- | ---------- | -------------------------- |
+| /lib                               |            | log settings and jar file  |
+| /src/main/java/com/pallycon/sample | /config    |                            |
+|                                    | /exception |                            |
+|                                    | /token     |                            |
+|                                    | /util      |                            |
+| /src/main/resource                 |            | log settings               |
+| /src/test/java/com/pallycon/sample |            | Guide to make Token Sample |
+
+✅ If you want to **simply generate PallyCon version of DRM LICENSE TOKEN**, follow the guidance below :
+
+1. import the `pallycon-token-sample-1.2.0.jar` file to your project library. This `JAR FILE` is in the directory `/lib/pallycon-token-sample-1.2.0.jar`.
+2. To generate, see the **Quick Test Example** below or `/src/test/java/com/pallycon/sample/PallyConDrmTokenSampleTest.java`.
 
 
 
@@ -155,12 +174,13 @@ We hope this guide would be helpful to generate DRM License Token to request Pal
 | 1003       | Token err : The accessKey is Required                        |
 | 1004       | Token err : The siteKey is Required                          |
 | 1005       | Token err : The policy is Required                           |
-| 1011 | PlaybackPolicy : The expireDate time format should be `YYYY-MM-DD'T'HH:mm:ss'Z` |
-| 1018 | ExternalKey : ExternalKey should be filled with MpegCenc, HlsAes or Ncg if called |
-| 1040 | MpegCenc : The KeyId should be 16byte hex String |
-| 1041 | MpegCenc : The Key should be 16byte hex String |
-| 1042 | MpegCenc : The Iv should be 16byte hex String |
-| 1044 | HlsAes : The Key should be 16byte hex String |
-| 1045 | HlsAes : The Iv should be 16byte hex String |
-| 1047 | Ncg : The Cek should be 32byte hex String |
-| 2001 | json parser error |
+| 1011       | PlaybackPolicy : The expireDate time format should be `YYYY-MM-DD'T'HH:mm:ss'Z` |
+| 1018       | ExternalKey : ExternalKey should be filled with MpegCenc, HlsAes or Ncg if called |
+| 1040       | MpegCenc : The KeyId should be 16byte hex String             |
+| 1041       | MpegCenc : The Key should be 16byte hex String               |
+| 1042       | MpegCenc : The Iv should be 16byte hex String                |
+| 1044       | HlsAes : The Key should be 16byte hex String                 |
+| 1045       | HlsAes : The Iv should be 16byte hex String                  |
+| 1047       | Ncg : The Cek should be 32byte hex String                    |
+| 2001       | json parser error                                            |
+
