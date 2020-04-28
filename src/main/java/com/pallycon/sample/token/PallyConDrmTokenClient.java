@@ -121,6 +121,7 @@ public class PallyConDrmTokenClient implements PallyConDrmToken {
 
     private PallyConDrmTokenClient timestamp(){
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+        format.setTimeZone(TimeZone.getTimeZone("GMT"));
         this.timestamp = format.format(new Date());
         return this;
     }
