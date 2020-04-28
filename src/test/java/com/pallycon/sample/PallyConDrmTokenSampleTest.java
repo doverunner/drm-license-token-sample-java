@@ -126,8 +126,8 @@ public class PallyConDrmTokenSampleTest {
                     .policy(policy)
                     .responseFormat(ResponseFormat.CUSTOM);
             logger.info("---------------tokenJson---------------");
-            logger.debug(token.toJsonString());
             licenseToken = token.execute();
+            logger.debug(token.toJsonString());
 
         } catch (PallyConTokenException e) {
             licenseToken = e.getMessage();
