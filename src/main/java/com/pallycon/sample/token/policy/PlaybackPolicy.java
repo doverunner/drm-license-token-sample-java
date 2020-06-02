@@ -60,7 +60,7 @@ public class PlaybackPolicy {
     }
 
     private boolean checkDates(String expireDate) {
-        Pattern pattern = Pattern.compile("^[0-9]{4}-[0,1][0-9]-[0-5][0-9]T[0-2][0-3]:[0-5][0-9]:[0-5][0-9]Z$");
+        Pattern pattern = Pattern.compile("^[0-9]{4}-[0,1][0-9]-[0-5][0-9]T[0-2][0-9]:[0-5][0-9]:[0-5][0-9]Z$");
         return pattern.matcher(expireDate).matches();
     }
 
