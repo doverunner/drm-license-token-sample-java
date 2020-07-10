@@ -8,8 +8,8 @@ public enum RequiredHdcpVersion {
     HDCP_NONE("HDCP_NONE"),
     HDCP_V1("HDCP_V1"),
     HDCP_V2("HDCP_V2"),
-    HDCP_V2_1("HDCP_V2.1"),
-    HDCP_V2_2("HDCP_V2.2"),
+    HDCP_V2_1("HDCP_V2_1"),
+    HDCP_V2_2("HDCP_V2_2"),
     HDCP_NO_DIGITAL_OUTPUT("HDCP_NO_DIGITAL_OUTPUT");
 
     private String value;

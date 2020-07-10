@@ -24,6 +24,12 @@ public class PlaybackPolicy {
     @JsonProperty("allowed_track_types")
     private String allowedTrackTypes;
 
+    @JsonProperty("rental_duration")
+    private Integer rentalDuration;
+
+    @JsonProperty("playback_duration")
+    private Integer playbackDuration;
+
     public PlaybackPolicy() {
     }
 
@@ -50,6 +56,20 @@ public class PlaybackPolicy {
         this.allowedTrackTypes = allowedTrackTypes.getValue();
         return this;
     }
+
+
+    public PlaybackPolicy rentalDuration(int rentalDuration) {
+        this.rentalDuration = rentalDuration;
+        return this;
+    }
+
+
+    public PlaybackPolicy playbackDuration(int playbackDuration) {
+        this.playbackDuration = playbackDuration;
+        return this;
+    }
+
+
 
     public void check() throws PallyConTokenException {
         if (null != this.expireDate
@@ -83,5 +103,13 @@ public class PlaybackPolicy {
 
     public String getAllowedTrackTypes() {
         return allowedTrackTypes;
+    }
+
+    public Integer getRentalDuration() {
+        return rentalDuration;
+    }
+
+    public Integer getPlaybackDuration() {
+        return playbackDuration;
     }
 }
