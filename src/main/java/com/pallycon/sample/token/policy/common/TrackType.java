@@ -1,4 +1,4 @@
-package com.pallycon.sample.config;
+package com.pallycon.sample.token.policy.common;
 
 /**
  * for @security_policy @track_type

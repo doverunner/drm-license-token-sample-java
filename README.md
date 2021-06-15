@@ -123,7 +123,7 @@ public class SampleTest {
                     .userId("<tester-user>")
                 	.cId("<Content ID>")
                     .policy(policy)
-                    .responseFormat(ResponseFormat.CUSTOM);
+                    .responseFormat(ResponseFormat.ORIGINAL);
             logger.info("---------------tokenJson---------------");
             logger.debug(token.toJsonString());
             licenseToken = token.execute();

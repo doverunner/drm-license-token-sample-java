@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pallycon.sample.exception.PallyConTokenException;
-import com.pallycon.sample.config.ResponseFormat;
+import com.pallycon.sample.token.policy.common.ResponseFormat;
 import com.pallycon.sample.util.StringEncrypter;
 
 import java.nio.charset.StandardCharsets;

@@ -3,7 +3,7 @@ package com.pallycon.sample.token.policy;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.pallycon.sample.config.security.playready.*;
+import com.pallycon.sample.token.policy.securityPolicy.playready.*;
 
 /**
  * @related security_policy
@@ -22,14 +22,6 @@ public class SecurityPolicyPlayready {
 
     @JsonProperty("analog_video_protection_level")
     private Integer analogVideoProtection;
-
-    @Deprecated
-    @JsonProperty("compressed_digital_audio_protection_level")
-    private Integer compressedDigitalAudioProtection;
-
-    @Deprecated
-    @JsonProperty("uncompressed_digital_audio_protection_level")
-    private Integer uncompressedDigitalAudioProtection;
 
     @JsonProperty("digital_audio_protection_level")
     private Integer digitalAudioProtection;
@@ -55,18 +47,6 @@ public class SecurityPolicyPlayready {
         return this;
     }
 
-    @Deprecated
-    public SecurityPolicyPlayready compressedDigitalAudioProtection(CompressedDigitalAudioProtection compressedDigitalAudioProtection) {
-        this.compressedDigitalAudioProtection = compressedDigitalAudioProtection.getValue();
-        return this;
-    }
-
-    @Deprecated
-    public SecurityPolicyPlayready uncompressedDigitalAudioProtection(UnCompressedDigitalAudioProtection uncompressedDigitalAudioProtection) {
-        this.uncompressedDigitalAudioProtection = uncompressedDigitalAudioProtection.getValue();
-        return this;
-    }
-
     public SecurityPolicyPlayready digitalAudioProtection(DigitalAudioProtection digitalAudioProtection) {
         this.digitalAudioProtection = digitalAudioProtection.getValue();
         return this;
@@ -87,16 +67,6 @@ public class SecurityPolicyPlayready {
 
     public Integer getAnalogVideoProtection() {
         return analogVideoProtection;
-    }
-
-    @Deprecated
-    public Integer getCompressedDigitalAudioProtection() {
-        return compressedDigitalAudioProtection;
-    }
-
-    @Deprecated
-    public Integer getUncompressedDigitalAudioProtection() {
-        return uncompressedDigitalAudioProtection;
     }
 
     public Boolean getRequireHdcpType1() {

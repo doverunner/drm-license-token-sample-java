@@ -1,12 +1,19 @@
 package com.pallycon.sample;
 
 import com.pallycon.sample.config.*;
-import com.pallycon.sample.config.security.playready.DigitalAudioProtection;
+import com.pallycon.sample.token.policy.common.ResponseFormat;
+import com.pallycon.sample.token.policy.common.TrackType;
+import com.pallycon.sample.token.policy.playbackPolicy.AllowedTrackTypes;
+import com.pallycon.sample.token.policy.securityPolicy.fairplay.FairplayHdcpEnforcement;
+import com.pallycon.sample.token.policy.securityPolicy.ncg.NcgControlHdcp;
+import com.pallycon.sample.token.policy.securityPolicy.playready.DigitalAudioProtection;
 import com.pallycon.sample.exception.PallyConTokenException;
-import com.pallycon.sample.config.security.playready.AnalogVideoProtection;
-import com.pallycon.sample.config.security.widevine.RequiredCgmsFlags;
-import com.pallycon.sample.config.security.widevine.RequiredHdcpVersion;
-import com.pallycon.sample.config.security.widevine.WidevineSecurityLevel;
+import com.pallycon.sample.token.policy.securityPolicy.playready.AnalogVideoProtection;
+import com.pallycon.sample.token.policy.securityPolicy.playready.DigitalVideoProtection;
+import com.pallycon.sample.token.policy.securityPolicy.playready.PlayreadySecurityLevel;
+import com.pallycon.sample.token.policy.securityPolicy.widevine.RequiredCgmsFlags;
+import com.pallycon.sample.token.policy.securityPolicy.widevine.RequiredHdcpVersion;
+import com.pallycon.sample.token.policy.securityPolicy.widevine.WidevineSecurityLevel;
 import com.pallycon.sample.token.PallyConDrmTokenClient;
 import com.pallycon.sample.token.PallyConDrmTokenPolicy;
 import com.pallycon.sample.token.policy.*;
@@ -50,8 +57,7 @@ public class PallyConDrmTokenSampleTest {
          * @param external_key
          * */
         PlaybackPolicy playbackPolicy = new PlaybackPolicy();
-        SecurityPolicy securityPolicyForSD = new SecurityPolicy();
-        SecurityPolicy securityPolicyForHD = new SecurityPolicy();
+        SecurityPolicy securityPolicyForAll = new SecurityPolicy();
         ExternalKeyPolicy externalKeyPolicy = new ExternalKeyPolicy();
 
         // setup ExternalKeyPolicy
@@ -62,40 +68,31 @@ public class PallyConDrmTokenSampleTest {
         );
 
         // setup SecurityPolicy
-        /** creates SD track for securityPolicy */
-        SecurityPolicyWidevine widevineForSD = new SecurityPolicyWidevine()
+        /** creates ALL track for securityPolicy */
+        SecurityPolicyWidevine widevineForAll = new SecurityPolicyWidevine()
                 .securityLevel(WidevineSecurityLevel.SW_SECURE_CRYPTO)
-                .requiredHdcpVersion(RequiredHdcpVersion.HDCP_V2_1);
-        SecurityPolicyFairplay fairplayForSD = new SecurityPolicyFairplay()
-                .allowAirplay(false);
-        SecurityPolicyPlayready playreadyForSD = new SecurityPolicyPlayready()
-                .digitalAudioProtection(DigitalAudioProtection.LEVEL_250)
-                .analogVideoProtection(AnalogVideoProtection.LEVEL_150);
-
-
-        /** creates HD track for securityPolicy */
-        SecurityPolicyWidevine widevineForHD = new SecurityPolicyWidevine()
-                .securityLevel(WidevineSecurityLevel.HW_SECURE_DECODE)
-                .requiredCgmsFlags(RequiredCgmsFlags.COPY_FREE)
-                .disableAnalogOutput(true);
-        SecurityPolicyFairplay fairplayForHD = new SecurityPolicyFairplay();
-        SecurityPolicyNcg ncgForHD = new SecurityPolicyNcg()
-                .allowExternalDisplay(true)
-                .controlHdcp(NcgControlHdcp.HDCP_V2_2);
+                .requiredHdcpVersion(RequiredHdcpVersion.HDCP_NONE)
+                .requiredCgmsFlags(RequiredCgmsFlags.CGMS_NONE)
+                .overrideDeviceRevocation(true);
+        SecurityPolicyFairplay fairplayForAll = new SecurityPolicyFairplay()
+                .hdcpEnforcement(FairplayHdcpEnforcement.HDCP_NONE)
+                .allowAvAdapter(true)
+                .allowAirplay(true);
+        SecurityPolicyPlayready playreadyForAll = new SecurityPolicyPlayready()
+                .securityLevel(PlayreadySecurityLevel.LEVEL_150)
+                .analogVideoProtection(AnalogVideoProtection.LEVEL_100)
+                .digitalVideoProtection(DigitalVideoProtection.LEVEL_100)
+                .digitalAudioProtection(DigitalAudioProtection.LEVEL_100)
+                .requireHdcpType1(false);
 
         playbackPolicy
-                .allowedTrackTypes(AllowedTrackTypes.SD_UHD1)
-                .licenseDuration(60);
-        securityPolicyForSD
-                .widevine(widevineForSD)
-                .fairplay(fairplayForSD)
-                .playready(playreadyForSD)
-                .trackType(TrackType.SD);
-        securityPolicyForHD
-                .widevine(widevineForHD)
-                .fairplay(fairplayForHD)
-                .ncg(ncgForHD)
-                .trackType(TrackType.HD);
+                .allowedTrackTypes(AllowedTrackTypes.SD_HD)
+                .persistent(false);
+        securityPolicyForAll
+                .widevine(widevineForAll)
+                .fairplay(fairplayForAll)
+                .playready(playreadyForAll)
+                .trackType(TrackType.ALL);
         externalKeyPolicy.mpegCenc(Arrays.asList(mpegCenc, mpegCenc, mpegCenc));
 
 
@@ -107,8 +104,7 @@ public class PallyConDrmTokenSampleTest {
                     .PolicyBuilder()
                     .playbackPolicy(playbackPolicy)
                     .externalKey(externalKeyPolicy)
-                    .securityPolicy(securityPolicyForSD)
-                    .securityPolicy(securityPolicyForHD)
+                    .securityPolicy(securityPolicyForAll)
                     .build();
             logger.info("---------------policyJson---------------");
             logger.debug(policy.toJsonString());
@@ -117,14 +113,14 @@ public class PallyConDrmTokenSampleTest {
              * 3. create token
              * */
             token = new PallyConDrmTokenClient()
-                    .widevine()
+                    .playready()
                     .siteId(Config.SITE_ID)
                     .siteKey(Config.SITE_KEY)
                     .accessKey(Config.ACCESS_KEY)
                     .userId(Config.USER_ID)
                     .cId(Config.C_ID)
                     .policy(policy)
-                    .responseFormat(ResponseFormat.CUSTOM);
+                    .responseFormat(ResponseFormat.ORIGINAL);
             logger.info("---------------tokenJson---------------");
             licenseToken = token.execute();
             logger.debug(token.toJsonString());

@@ -4,10 +4,10 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.pallycon.sample.config.security.widevine.HdcpSrmRule;
-import com.pallycon.sample.config.security.widevine.RequiredCgmsFlags;
-import com.pallycon.sample.config.security.widevine.RequiredHdcpVersion;
-import com.pallycon.sample.config.security.widevine.WidevineSecurityLevel;
+import com.pallycon.sample.token.policy.securityPolicy.widevine.HdcpSrmRule;
+import com.pallycon.sample.token.policy.securityPolicy.widevine.RequiredCgmsFlags;
+import com.pallycon.sample.token.policy.securityPolicy.widevine.RequiredHdcpVersion;
+import com.pallycon.sample.token.policy.securityPolicy.widevine.WidevineSecurityLevel;
 
 /**
  * @related security_policy
@@ -16,7 +16,7 @@ import com.pallycon.sample.config.security.widevine.WidevineSecurityLevel;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonSerialize()
 @JsonPropertyOrder({"security_level", "required_hdcp_version", "required_cgms_flags",
-        "disable_analog_output", "hdcp_srm_rule"})
+        "disable_analog_output", "hdcp_srm_rule", "override_device_revocation"})
 
 public class SecurityPolicyWidevine {
 
@@ -30,6 +30,8 @@ public class SecurityPolicyWidevine {
     private Boolean disableAnalogOutput;
     @JsonProperty("hdcp_srm_rule")
     private String hdcpSrmRule;
+    @JsonProperty("override_device_revocation")
+    private Boolean overrideDeviceRevocation=true;
 
     public SecurityPolicyWidevine() {
     }
@@ -59,6 +61,11 @@ public class SecurityPolicyWidevine {
         return this;
     }
 
+    public SecurityPolicyWidevine overrideDeviceRevocation(Boolean overrideDeviceRevocation) {
+        this.overrideDeviceRevocation = overrideDeviceRevocation;
+        return this;
+    }
+
 
     public Integer getSecurityLevel() {
         return securityLevel;
@@ -78,5 +85,9 @@ public class SecurityPolicyWidevine {
 
     public String getHdcpSrmRule() {
         return hdcpSrmRule;
+    }
+
+    public Boolean getOverrideDeviceRevocation() {
+        return overrideDeviceRevocation;
     }
 }

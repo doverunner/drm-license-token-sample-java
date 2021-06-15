@@ -1,4 +1,4 @@
-package com.pallycon.sample.config;
+package com.pallycon.sample.token.policy.playbackPolicy;
 
 /**
  * for @playback_policy @allowed_track_types

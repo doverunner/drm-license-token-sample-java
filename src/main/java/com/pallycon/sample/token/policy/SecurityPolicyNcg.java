@@ -3,7 +3,7 @@ package com.pallycon.sample.token.policy;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.pallycon.sample.config.NcgControlHdcp;
+import com.pallycon.sample.token.policy.securityPolicy.ncg.NcgControlHdcp;
 
 /**
  * @related security_policy

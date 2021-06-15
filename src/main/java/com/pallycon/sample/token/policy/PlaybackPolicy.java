@@ -4,12 +4,12 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.pallycon.sample.exception.PallyConTokenException;
-import com.pallycon.sample.config.AllowedTrackTypes;
+import com.pallycon.sample.token.policy.playbackPolicy.AllowedTrackTypes;
 
 import java.util.regex.Pattern;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({"persistent", "license_duration", "expire_date", "allowed_track_types"})
+@JsonPropertyOrder({"persistent", "license_duration", "expire_date", "allowed_track_types", "rental_duration", "playback_duration"})
 public class PlaybackPolicy {
 
     @JsonProperty("persistent")
@@ -29,6 +29,7 @@ public class PlaybackPolicy {
 
     @JsonProperty("playback_duration")
     private Integer playbackDuration;
+
 
     public PlaybackPolicy() {
     }

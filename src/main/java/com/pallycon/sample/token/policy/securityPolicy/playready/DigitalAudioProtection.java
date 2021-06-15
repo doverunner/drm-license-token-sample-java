@@ -1,4 +1,4 @@
-package com.pallycon.sample.config.security.playready;
+package com.pallycon.sample.token.policy.securityPolicy.playready;
 
 /**
  * for @security_policy @security_level @playready
