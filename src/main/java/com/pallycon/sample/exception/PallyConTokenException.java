@@ -6,9 +6,6 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
-/**
- * Created By NY on 2020-01-13.
- */
 public class PallyConTokenException extends Exception{
     private static Logger logger = LoggerFactory.getLogger(PallyConTokenException.class);
     private ErrorCode errorCode;

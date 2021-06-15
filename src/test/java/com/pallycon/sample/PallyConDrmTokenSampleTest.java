@@ -1,11 +1,8 @@
 package com.pallycon.sample;
 
-import com.pallycon.sample.config.*;
-import com.pallycon.sample.token.policy.common.ResponseFormat;
 import com.pallycon.sample.token.policy.common.TrackType;
 import com.pallycon.sample.token.policy.playbackPolicy.AllowedTrackTypes;
 import com.pallycon.sample.token.policy.securityPolicy.fairplay.FairplayHdcpEnforcement;
-import com.pallycon.sample.token.policy.securityPolicy.ncg.NcgControlHdcp;
 import com.pallycon.sample.token.policy.securityPolicy.playready.DigitalAudioProtection;
 import com.pallycon.sample.exception.PallyConTokenException;
 import com.pallycon.sample.token.policy.securityPolicy.playready.AnalogVideoProtection;
@@ -18,57 +15,52 @@ import com.pallycon.sample.token.PallyConDrmTokenClient;
 import com.pallycon.sample.token.PallyConDrmTokenPolicy;
 import com.pallycon.sample.token.policy.*;
 import com.pallycon.sample.v2.PolicyTest;
+import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Arrays;
-
 /**
- * for creating token eventually.
+ * Sample Code for creating token.
  */
 public class PallyConDrmTokenSampleTest {
+
     private static Logger logger = LoggerFactory.getLogger(PolicyTest.class);
 
-    /** STEPS TO GET TOKEN
+    private String licenseTokenForPlayready = "";
+    private String licenseTokenForWidevine = "";
+    private String licenseTokenForFairplay = "";
+
+    private PallyConDrmTokenPolicy policy = null;
+    private PallyConDrmTokenClient tokenForPlayready = null;
+    private PallyConDrmTokenClient tokenForWidevine = null;
+    private PallyConDrmTokenClient tokenForFairplay = null;
+
+    private PlaybackPolicy playbackPolicy = new PlaybackPolicy();
+    private SecurityPolicy securityPolicyForAll = new SecurityPolicy();
+
+    /**
+     * NOTICE :
+     * In this tutorial, we're going to create default license token for Widevine, Playready, Fairplay.
      *
-     * 1. set up policies you want
+     * STEPS TO GET TOKEN
+     * 1. set up policies
      * 2. build policy
      * 3. create token
+     *
+     *  TODO need to fill out `Config.java`.
+     *  fields in Config will be automatically match to `PallyConDrmTokenClient`
+     *  Also `siteId, siteKey, accessKey, userId, cId` of PallyConDrmTokenClient can be substituted independently if want.
+     */
+
+    /**
+     * 1. set up policies
+     * In this tutorial,
+     *      we only use `playback_policy`, `security_policy`
+     *      Except `external_key`.
      * */
-
-    @Test
-    public void makeToken() {
-
-        /**
-         * @param licenseToken creates a token for Multi Drm license request.
-         *                     if not follow the token or policy rule of pallyCon,
-         *                     you would get the error codes and messages and fix to issue the token you intended to.
-         * */
-
-        String licenseToken = "";
-        PallyConDrmTokenPolicy policy = null;
-        PallyConDrmTokenClient token = null;
-
-        /**
-         * 1. set up policies you want
-         * @param playback_policy
-         * @param security_policy
-         * @param external_key
-         * */
-        PlaybackPolicy playbackPolicy = new PlaybackPolicy();
-        SecurityPolicy securityPolicyForAll = new SecurityPolicy();
-        ExternalKeyPolicy externalKeyPolicy = new ExternalKeyPolicy();
-
-        // setup ExternalKeyPolicy
-        ExternalKeyPolicyMpegCenc mpegCenc = new ExternalKeyPolicyMpegCenc(
-                TrackType.ALL_VIDEO,
-                "<Key ID>",
-                "<Key>"
-        );
-
-        // setup SecurityPolicy
-        /** creates ALL track for securityPolicy */
+    @Before
+    public void setUpPolicies() {
         SecurityPolicyWidevine widevineForAll = new SecurityPolicyWidevine()
                 .securityLevel(WidevineSecurityLevel.SW_SECURE_CRYPTO)
                 .requiredHdcpVersion(RequiredHdcpVersion.HDCP_NONE)
@@ -82,55 +74,111 @@ public class PallyConDrmTokenSampleTest {
                 .securityLevel(PlayreadySecurityLevel.LEVEL_150)
                 .analogVideoProtection(AnalogVideoProtection.LEVEL_100)
                 .digitalVideoProtection(DigitalVideoProtection.LEVEL_100)
-                .digitalAudioProtection(DigitalAudioProtection.LEVEL_100)
-                .requireHdcpType1(false);
+                .digitalAudioProtection(DigitalAudioProtection.LEVEL_100);
 
-        playbackPolicy
+        this.playbackPolicy
                 .allowedTrackTypes(AllowedTrackTypes.SD_HD)
                 .persistent(false);
-        securityPolicyForAll
+        this.securityPolicyForAll
                 .widevine(widevineForAll)
                 .fairplay(fairplayForAll)
                 .playready(playreadyForAll)
                 .trackType(TrackType.ALL);
-        externalKeyPolicy.mpegCenc(Arrays.asList(mpegCenc, mpegCenc, mpegCenc));
+    }
 
+    /**
+     * 2. build policy
+     * */
+    private void buildPolicy() throws PallyConTokenException {
+        this.policy = new PallyConDrmTokenPolicy
+                .PolicyBuilder()
+                .playbackPolicy(playbackPolicy)
+                .securityPolicy(securityPolicyForAll)
+                .build();
+        logger.debug("policyJson: {}" , this.policy.toJsonString());
+    }
 
+    /**
+     * 3. create token for Playready
+     * */
+    @Test
+    public void makeBasicTokenForPlayready() {
         try {
-            /**
-             * 2. build policy
-             * */
-            policy = new PallyConDrmTokenPolicy
-                    .PolicyBuilder()
-                    .playbackPolicy(playbackPolicy)
-                    .externalKey(externalKeyPolicy)
-                    .securityPolicy(securityPolicyForAll)
-                    .build();
-            logger.info("---------------policyJson---------------");
-            logger.debug(policy.toJsonString());
+            // build policy.
+            buildPolicy();
 
-            /**
-             * 3. create token
-             * */
-            token = new PallyConDrmTokenClient()
-                    .playready()
-                    .siteId(Config.SITE_ID)
-                    .siteKey(Config.SITE_KEY)
-                    .accessKey(Config.ACCESS_KEY)
-                    .userId(Config.USER_ID)
-                    .cId(Config.C_ID)
-                    .policy(policy)
-                    .responseFormat(ResponseFormat.ORIGINAL);
-            logger.info("---------------tokenJson---------------");
-            licenseToken = token.execute();
-            logger.debug(token.toJsonString());
+            // use default settings included.
+            // if want to replace fields, see #makeTokenForFairplay.
+            this.tokenForPlayready = new PallyConDrmTokenClient().policy(policy);
+
+            // generate token.
+            this.licenseTokenForPlayready = this.tokenForPlayready.execute();
+            logger.debug("tokenForPlayready JSON: {}", this.tokenForPlayready.toJsonString());
 
         } catch (PallyConTokenException e) {
-            licenseToken = e.getMessage();
+            this.licenseTokenForPlayready = e.getMessage();
         } catch (Exception e) {
-            licenseToken = "unexpected Exception || " + e.getMessage();
+            this.licenseTokenForPlayready = "unexpected Exception || " + e.getMessage();
         }
-        logger.info("---------------result---------------");
-        logger.debug(licenseToken);
+
+        logger.debug("result_licenseTokenForPlayready: {}", this.licenseTokenForPlayready);
     }
+
+    /**
+     * 3. create token for Widevine.
+     * */
+    @Test
+    public void makeTokenForWidevine() {
+        try {
+            // build policy.
+            buildPolicy();
+
+            // if want to replace more fields, see #makeTokenForFairplay.
+            this.tokenForWidevine = new PallyConDrmTokenClient()
+                    .widevine()
+                    .userId("<tester-user>") // substitute if want
+                    .cId("<Content ID>") // substitute if want
+                    .policy(policy);
+
+            // generate token.
+            this.licenseTokenForWidevine = this.tokenForWidevine.execute();
+            logger.debug("tokenForWidevine JSON : {}", this.tokenForWidevine.toJsonString());
+
+        } catch (PallyConTokenException e) {
+            licenseTokenForWidevine = e.getMessage();
+        } catch (Exception e) {
+            this.licenseTokenForWidevine = "unexpected Exception || " + e.getMessage();
+        }
+        logger.debug("result_licenseTokenForWidevine: {}", licenseTokenForWidevine);
+    }
+
+    /**
+     * 3. create token for Fairplay
+     * */
+    @Test
+    public void makeTokenForFairplay() {
+        try {
+            // build policy.
+            buildPolicy();
+
+            this.tokenForFairplay = new PallyConDrmTokenClient()
+                    .fairplay()
+                    .siteKey("<Site Key>") // substitute if want
+                    .accessKey("<Access Key>") // substitute if want
+                    .siteId("<Site ID>") // substitute if want
+                    .userId("<tester-user>") // substitute if want
+                    .cId("<Content ID>") // substitute if want
+                    .policy(policy);
+
+            // generate token.
+            this.licenseTokenForFairplay = this.tokenForFairplay.execute();
+            logger.debug("tokenForFairplay JSON : {}", this.tokenForFairplay.toJsonString());
+        } catch (PallyConTokenException e) {
+            licenseTokenForFairplay = e.getMessage();
+        } catch (Exception e) {
+            this.licenseTokenForFairplay = "unexpected Exception || " + e.getMessage();
+        }
+        logger.debug("result_licenseTokenForWidevine: {}", licenseTokenForFairplay);
+    }
+
 }

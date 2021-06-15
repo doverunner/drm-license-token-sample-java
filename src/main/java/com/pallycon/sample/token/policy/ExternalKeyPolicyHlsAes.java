@@ -5,9 +5,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.pallycon.sample.token.policy.common.TrackType;
 
-/**
- * Created By NY on 2020-01-14.
- */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({"track_type", "key", "iv"})
 public class ExternalKeyPolicyHlsAes {

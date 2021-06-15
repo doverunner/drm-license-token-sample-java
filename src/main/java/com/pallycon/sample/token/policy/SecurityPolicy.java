@@ -5,9 +5,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.pallycon.sample.token.policy.common.TrackType;
 
-/**
- * Created By NY on 2020-04-08.
- */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
         "track_type", "widevine", "playready", "fairplay", "ncg"

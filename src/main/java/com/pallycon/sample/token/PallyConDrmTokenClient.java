@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.pallycon.sample.config.Config;
 import com.pallycon.sample.exception.PallyConTokenException;
 import com.pallycon.sample.token.policy.common.ResponseFormat;
 import com.pallycon.sample.util.StringEncrypter;
@@ -22,7 +23,7 @@ import java.util.TimeZone;
  */
 
 @JsonPropertyOrder({
-        "drm_type", "site_id", "user_id", "cid", "policy", "response_format", "timestamp", "hash"
+        "drm_type", "site_id", "user_id", "cid", "policy", "response_format", "key_rotation", "timestamp", "hash"
 })
 public class PallyConDrmTokenClient implements PallyConDrmToken {
 
@@ -39,7 +40,7 @@ public class PallyConDrmTokenClient implements PallyConDrmToken {
      * */
 
     @JsonProperty("drm_type")
-    private String drmType = "PlayReady";
+    private String drmType;
     @JsonProperty("site_id")
     private String siteId;
     @JsonProperty("user_id")
@@ -49,7 +50,9 @@ public class PallyConDrmTokenClient implements PallyConDrmToken {
     @JsonProperty("policy")
     private String encPolicy;
     @JsonProperty("response_format")
-    private String responseFormat = ResponseFormat.ORIGINAL.getValue();
+    private String responseFormat;
+    @JsonProperty("key_rotation")
+    private Boolean keyRotation;
     @JsonProperty("timestamp")
     private String timestamp;
     @JsonProperty("hash")
@@ -64,9 +67,18 @@ public class PallyConDrmTokenClient implements PallyConDrmToken {
     @JsonIgnore
     private static final String AES_IV = "0123456789abcdef";
 
+    // default : TODO SET CONFIG FIELDS.
     public PallyConDrmTokenClient() {
-
+        this.playready()
+            .siteId(Config.SITE_ID)
+            .siteKey(Config.SITE_KEY)
+            .accessKey(Config.ACCESS_KEY)
+            .userId(Config.USER_ID)
+            .cId(Config.C_ID)
+            .responseFormat(ResponseFormat.ORIGINAL)
+            .keyRotation(false);
     }
+
     public PallyConDrmTokenClient siteKey(String siteKey) {
         this.siteKey = siteKey;
         return this;
@@ -116,6 +128,11 @@ public class PallyConDrmTokenClient implements PallyConDrmToken {
 
     public PallyConDrmTokenClient responseFormat(ResponseFormat responseFormat) {
         this.responseFormat = responseFormat.getValue();
+        return this;
+    }
+
+    public PallyConDrmTokenClient keyRotation(Boolean keyRotation) {
+        this.keyRotation = keyRotation;
         return this;
     }
 

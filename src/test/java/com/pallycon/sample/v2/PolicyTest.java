@@ -19,9 +19,6 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
 
-/**
- * Created By NY on 2020-04-08.
- */
 public class PolicyTest {
 
     private static Logger logger = LoggerFactory.getLogger(PolicyTest.class);
