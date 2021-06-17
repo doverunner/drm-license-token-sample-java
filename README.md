@@ -19,7 +19,6 @@
 
 | dir                                |            | description                |
 | ---------------------------------- | ---------- | -------------------------- |
-| /lib                               |            | log settings and jar file  |
 | /src/main/java/com/pallycon/sample | /config    |                            |
 |                                    | /exception |                            |
 |                                    | /token     |                            |
@@ -29,7 +28,7 @@
 
 ✅ If you want to **simply generate PallyCon version of DRM LICENSE TOKEN**, follow the guidance below :
 
-1. import the `pallycon-token-sample-1.2.0.jar` file to your project library. This `JAR FILE` is in the directory `/lib/pallycon-token-sample-1.2.0.jar`.
+1. clone this project.
 2. To generate, see the **Quick Test Example** below or `/src/test/java/com/pallycon/sample/PallyConDrmTokenSampleTest.java`.
 
 
