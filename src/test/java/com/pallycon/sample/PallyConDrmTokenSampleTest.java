@@ -41,7 +41,7 @@ public class PallyConDrmTokenSampleTest {
 
     /**
      * NOTICE :
-     * In this tutorial, we're going to create default license token for Widevine, Playready, Fairplay.
+     * In this tutorial, we're going to create default license token for Widevine, PlayReady, FairPlay.
      *
      * STEPS TO GET TOKEN
      * 1. set up policies

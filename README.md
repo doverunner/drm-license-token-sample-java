@@ -4,13 +4,13 @@
 
 ### IDE
 
-- JAVA JDK 1.8 +
+- JAVA JDK amazon-corretto-8  (jdk1.8.0_232)
+- maven / intellij
 
 
 
 #### log settings
 
-- `logbackProperties.properties`
 - `logback.xml`
 
 
@@ -70,28 +70,31 @@ public class SampleTest {
         
         //setup playbackPolicy
         playbackPolicy
-                .allowedTrackTypes(AllowedTrackTypes.SD_UHD1)
-            	.licenseDuration(60);
+                .allowedTrackTypes(AllowedTrackTypes.SD_HD)
+                .persistent(false);
 
         /** setup SecurityPolicy
             - creates subpolicies named*/
-        SecurityPolicyWidevine widevineForSD 
-            = new SecurityPolicyWidevine()
+        SecurityPolicyWidevine widevineForAll = new SecurityPolicyWidevine()
                 .securityLevel(WidevineSecurityLevel.SW_SECURE_CRYPTO)
-                .requiredHdcpVersion(RequiredHdcpVersion.HDCP_V2_1);
-        SecurityPolicyFairplay fairplayForSD 
-            = new SecurityPolicyFairplay()
-                .allowAirplay(false);
-        SecurityPolicyPlayready playreadyForSD 
-            = new SecurityPolicyPlayready()
-                .digitalAudioProtection(DigitalAudioProtection.LEVEL_250)
-                .analogVideoProtection(AnalogVideoProtection.LEVEL_150);
+                .requiredHdcpVersion(RequiredHdcpVersion.HDCP_NONE)
+                .requiredCgmsFlags(RequiredCgmsFlags.CGMS_NONE)
+                .overrideDeviceRevocation(true);
+        SecurityPolicyFairplay fairplayForAll = new SecurityPolicyFairplay()
+                .hdcpEnforcement(FairplayHdcpEnforcement.HDCP_NONE)
+                .allowAvAdapter(true)
+                .allowAirplay(true);
+        SecurityPolicyPlayready playreadyForAll = new SecurityPolicyPlayready()
+                .securityLevel(PlayreadySecurityLevel.LEVEL_150)
+                .analogVideoProtection(AnalogVideoProtection.LEVEL_100)
+                .digitalVideoProtection(DigitalVideoProtection.LEVEL_100)
+                .digitalAudioProtection(DigitalAudioProtection.LEVEL_100);
         //constructs subpolicies for SecurityPolicy
         securityPolicy
-                .widevine(widevineForSD)
-                .fairplay(fairplayForSD)
-                .playready(playreadyForSD)
-                .trackType(TrackType.SD);
+                .widevine(widevineForAll)
+                .fairplay(fairplayForAll)
+                .playready(playreadyForAll)
+                .trackType(TrackType.ALL);
      
         // setup ExternalKeyPolicy
         ExternalKeyPolicyMpegCenc mpegCenc = new ExternalKeyPolicyMpegCenc(
@@ -106,8 +109,7 @@ public class SampleTest {
                     .PolicyBuilder()
                     .playbackPolicy(playbackPolicy)
                     .externalKey(externalKeyPolicy)
-                    .securityPolicy(securityPolicyForSD)
-                    .securityPolicy(securityPolicyForSD)
+                    .securityPolicy(securityPolicy)
                     .build();
             logger.info("---------------policyJson---------------");
             logger.debug(policy.toJsonString());
