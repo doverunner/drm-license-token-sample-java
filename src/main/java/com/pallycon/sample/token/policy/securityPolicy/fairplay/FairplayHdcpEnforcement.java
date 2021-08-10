@@ -1,4 +1,4 @@
-package com.pallycon.sample.config;
+package com.pallycon.sample.token.policy.securityPolicy.fairplay;
 
 /**
  * for @security_policy @fairplay

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-    <property resource="logbackProperties.properties" />
+<!--    <property resource="logbackProperties.properties" />-->
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
@@ -8,41 +8,8 @@
         </encoder>
     </appender>
 
-    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${USER_HOME}/PallyConDrmTokenClient_CONSOLE.log</file>
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${USER_HOME}/PallyConDrmTokenClient_CONSOLE.%d{yyyy-MM-dd}_%i.log</fileNamePattern>
-            <maxHistory>30</maxHistory>
-            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-                <maxFileSize>10MB</maxFileSize>
-            </timeBasedFileNamingAndTriggeringPolicy>
-        </rollingPolicy>
-        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-            <pattern>[%d{yyyy-MM-dd HH:mm:ss}:%3relative] [%thread] %-5level %logger{36} - %msg%n</pattern>
-        </encoder>
-    </appender>
-    <appender name="LOG_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${USER_HOME}/PallyConDrmTokenClient_Log.log</file>
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${USER_HOME}/PallyConDrmTokenClient_Log.%d{yyyy-MM-dd}_%i.log</fileNamePattern>
-            <maxHistory>30</maxHistory>
-            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-                <maxFileSize>10MB</maxFileSize>
-            </timeBasedFileNamingAndTriggeringPolicy>
-        </rollingPolicy>
-        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-            <pattern>[%d{HH:mm:ss.SSS}] %-5level - %msg%n</pattern>
-        </encoder>
-    </appender>
-
     <root level="DEBUG">
         <appender-ref ref="STDOUT" />
-        <appender-ref ref="FILE" />
     </root>
-
-    <logger name="com.pallycon.sample" level="DEBUG">
-        <appender-ref ref="STDOUT" />
-        <appender-ref ref="LOG_FILE" />
-    </logger>
 
 </configuration>

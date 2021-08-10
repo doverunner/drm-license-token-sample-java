@@ -1,4 +1,4 @@
-package com.pallycon.sample.config.security.widevine;
+package com.pallycon.sample.token.policy.securityPolicy.widevine;
 
 /**
  * for @security_policy @widevine @required_cgms_flags

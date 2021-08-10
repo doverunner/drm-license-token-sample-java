@@ -4,13 +4,13 @@
 
 ### IDE
 
-- JAVA JDK 1.8 +
+- JAVA JDK amazon-corretto-8  (jdk1.8.0_232)
+- maven / intellij
 
 
 
 #### log settings
 
-- `logbackProperties.properties`
 - `logback.xml`
 
 
@@ -19,7 +19,6 @@
 
 | dir                                |            | description                |
 | ---------------------------------- | ---------- | -------------------------- |
-| /lib                               |            | log settings and jar file  |
 | /src/main/java/com/pallycon/sample | /config    |                            |
 |                                    | /exception |                            |
 |                                    | /token     |                            |
@@ -29,7 +28,7 @@
 
 ✅ If you want to **simply generate PallyCon version of DRM LICENSE TOKEN**, follow the guidance below :
 
-1. import the `pallycon-token-sample-1.2.0.jar` file to your project library. This `JAR FILE` is in the directory `/lib/pallycon-token-sample-1.2.0.jar`.
+1. clone this project.
 2. To generate, see the **Quick Test Example** below or `/src/test/java/com/pallycon/sample/PallyConDrmTokenSampleTest.java`.
 
 
@@ -70,28 +69,31 @@ public class SampleTest {
         
         //setup playbackPolicy
         playbackPolicy
-                .allowedTrackTypes(AllowedTrackTypes.SD_UHD1)
-            	.licenseDuration(60);
+                .allowedTrackTypes(AllowedTrackTypes.SD_HD)
+                .persistent(false);
 
         /** setup SecurityPolicy
             - creates subpolicies named*/
-        SecurityPolicyWidevine widevineForSD 
-            = new SecurityPolicyWidevine()
+        SecurityPolicyWidevine widevineForAll = new SecurityPolicyWidevine()
                 .securityLevel(WidevineSecurityLevel.SW_SECURE_CRYPTO)
-                .requiredHdcpVersion(RequiredHdcpVersion.HDCP_V2_1);
-        SecurityPolicyFairplay fairplayForSD 
-            = new SecurityPolicyFairplay()
-                .allowAirplay(false);
-        SecurityPolicyPlayready playreadyForSD 
-            = new SecurityPolicyPlayready()
-                .digitalAudioProtection(DigitalAudioProtection.LEVEL_250)
-                .analogVideoProtection(AnalogVideoProtection.LEVEL_150);
+                .requiredHdcpVersion(RequiredHdcpVersion.HDCP_NONE)
+                .requiredCgmsFlags(RequiredCgmsFlags.CGMS_NONE)
+                .overrideDeviceRevocation(true);
+        SecurityPolicyFairplay fairplayForAll = new SecurityPolicyFairplay()
+                .hdcpEnforcement(FairplayHdcpEnforcement.HDCP_NONE)
+                .allowAvAdapter(true)
+                .allowAirplay(true);
+        SecurityPolicyPlayready playreadyForAll = new SecurityPolicyPlayready()
+                .securityLevel(PlayreadySecurityLevel.LEVEL_150)
+                .analogVideoProtection(AnalogVideoProtection.LEVEL_100)
+                .digitalVideoProtection(DigitalVideoProtection.LEVEL_100)
+                .digitalAudioProtection(DigitalAudioProtection.LEVEL_100);
         //constructs subpolicies for SecurityPolicy
         securityPolicy
-                .widevine(widevineForSD)
-                .fairplay(fairplayForSD)
-                .playready(playreadyForSD)
-                .trackType(TrackType.SD);
+                .widevine(widevineForAll)
+                .fairplay(fairplayForAll)
+                .playready(playreadyForAll)
+                .trackType(TrackType.ALL);
      
         // setup ExternalKeyPolicy
         ExternalKeyPolicyMpegCenc mpegCenc = new ExternalKeyPolicyMpegCenc(
@@ -106,8 +108,7 @@ public class SampleTest {
                     .PolicyBuilder()
                     .playbackPolicy(playbackPolicy)
                     .externalKey(externalKeyPolicy)
-                    .securityPolicy(securityPolicyForSD)
-                    .securityPolicy(securityPolicyForSD)
+                    .securityPolicy(securityPolicy)
                     .build();
             logger.info("---------------policyJson---------------");
             logger.debug(policy.toJsonString());
@@ -123,7 +124,7 @@ public class SampleTest {
                     .userId("<tester-user>")
                 	.cId("<Content ID>")
                     .policy(policy)
-                    .responseFormat(ResponseFormat.CUSTOM);
+                    .responseFormat(ResponseFormat.ORIGINAL);
             logger.info("---------------tokenJson---------------");
             logger.debug(token.toJsonString());
             licenseToken = token.execute();

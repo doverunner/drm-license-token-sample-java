@@ -3,7 +3,7 @@ package com.pallycon.sample.token.policy;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.pallycon.sample.config.FairplayHdcpEnforcement;
+import com.pallycon.sample.token.policy.securityPolicy.fairplay.FairplayHdcpEnforcement;
 
 /**
  * @related security_policy
@@ -18,10 +18,10 @@ public class SecurityPolicyFairplay {
     private Integer hdcpEnforcement;
 
     @JsonProperty("allow_airplay")
-    private Boolean allowAirplay;
+    private Boolean allowAirplay=true;
 
     @JsonProperty("allow_av_adapter")
-    private Boolean allowAvAdapter;
+    private Boolean allowAvAdapter=true;
 
     public SecurityPolicyFairplay() {
     }

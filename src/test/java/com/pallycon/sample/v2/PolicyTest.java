@@ -2,28 +2,23 @@ package com.pallycon.sample.v2;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.pallycon.sample.config.AllowedTrackTypes;
-import com.pallycon.sample.config.FairplayHdcpEnforcement;
-import com.pallycon.sample.config.security.playready.DigitalVideoProtection;
-import com.pallycon.sample.config.security.playready.PlayreadySecurityLevel;
-import com.pallycon.sample.config.security.widevine.RequiredHdcpVersion;
-import com.pallycon.sample.config.security.widevine.WidevineSecurityLevel;
+import com.pallycon.sample.token.policy.playbackPolicy.AllowedTrackTypes;
+import com.pallycon.sample.token.policy.securityPolicy.fairplay.FairplayHdcpEnforcement;
+import com.pallycon.sample.token.policy.securityPolicy.playready.DigitalVideoProtection;
+import com.pallycon.sample.token.policy.securityPolicy.playready.PlayreadySecurityLevel;
+import com.pallycon.sample.token.policy.securityPolicy.widevine.RequiredHdcpVersion;
+import com.pallycon.sample.token.policy.securityPolicy.widevine.WidevineSecurityLevel;
 import com.pallycon.sample.exception.PallyConTokenException;
-import com.pallycon.sample.config.TrackType;
+import com.pallycon.sample.token.policy.common.TrackType;
 import com.pallycon.sample.token.PallyConDrmTokenPolicy;
 import com.pallycon.sample.token.policy.*;
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
-import org.omg.CORBA.PUBLIC_MEMBER;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
 
-/**
- * Created By NY on 2020-04-08.
- */
 public class PolicyTest {
 
     private static Logger logger = LoggerFactory.getLogger(PolicyTest.class);
@@ -52,7 +47,8 @@ public class PolicyTest {
                 "\"track_type\":\"ALL\"," +
                     "\"widevine\":{" +
                     "\"security_level\":1," +
-                    "\"required_hdcp_version\":\"HDCP_NONE\"" +
+                    "\"required_hdcp_version\":\"HDCP_NONE\"," +
+                    "\"override_device_revocation\":true"+
                     "}," +
                     "\"playready\":{" +
                     "\"security_level\":150," +

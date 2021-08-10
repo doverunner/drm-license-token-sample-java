@@ -2,9 +2,6 @@ package com.pallycon.sample.exception;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-/**
- * Created By NY on 2020-01-15.
- */
 public class ErrorCode {
     @JsonProperty("error_code")
     private String errorCode;

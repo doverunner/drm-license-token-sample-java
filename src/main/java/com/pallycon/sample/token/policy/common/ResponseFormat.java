@@ -1,4 +1,4 @@
-package com.pallycon.sample.config;
+package com.pallycon.sample.token.policy.common;
 
 public enum ResponseFormat {
     ORIGINAL("original"),

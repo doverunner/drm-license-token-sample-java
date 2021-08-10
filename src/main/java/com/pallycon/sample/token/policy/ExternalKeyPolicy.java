@@ -9,9 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-/**
- * Created By NY on 2020-01-21.
- */
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ExternalKeyPolicy {
