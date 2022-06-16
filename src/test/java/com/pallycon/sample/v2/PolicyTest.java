@@ -48,7 +48,7 @@ public class PolicyTest {
                     "\"widevine\":{" +
                     "\"security_level\":1," +
                     "\"required_hdcp_version\":\"HDCP_NONE\"," +
-                    "\"override_device_revocation\":true"+
+                    "\"override_device_revocation\":false"+
                     "}," +
                     "\"playready\":{" +
                     "\"security_level\":150," +

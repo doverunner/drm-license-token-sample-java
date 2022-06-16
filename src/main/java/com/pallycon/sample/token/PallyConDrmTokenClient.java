@@ -104,6 +104,11 @@ public class PallyConDrmTokenClient implements PallyConDrmToken {
         return this;
     }
 
+    public PallyConDrmTokenClient ncg() {
+        this.drmType = "NCG";
+        return this;
+    }
+
     public PallyConDrmTokenClient siteId(String siteId) {
         this.siteId = siteId;
         return this;

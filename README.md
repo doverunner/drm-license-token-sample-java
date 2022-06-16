@@ -88,11 +88,17 @@ public class SampleTest {
                 .analogVideoProtection(AnalogVideoProtection.LEVEL_100)
                 .digitalVideoProtection(DigitalVideoProtection.LEVEL_100)
                 .digitalAudioProtection(DigitalAudioProtection.LEVEL_100);
+        SecurityPolicyNcg ncgForAll = new SecurityPolicyNcg()
+                .allowMobileAbnormalDevice(true)
+                .allowExternalDisplay(true)
+                .controlHdcp(NcgControlHdcp.HDCP_NONE);
+        
         //constructs subpolicies for SecurityPolicy
         securityPolicy
                 .widevine(widevineForAll)
                 .fairplay(fairplayForAll)
                 .playready(playreadyForAll)
+                .ncg(ncgForAll)
                 .trackType(TrackType.ALL);
      
         // setup ExternalKeyPolicy
