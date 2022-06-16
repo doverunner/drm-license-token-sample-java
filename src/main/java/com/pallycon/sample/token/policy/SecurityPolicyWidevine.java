@@ -31,7 +31,7 @@ public class SecurityPolicyWidevine {
     @JsonProperty("hdcp_srm_rule")
     private String hdcpSrmRule;
     @JsonProperty("override_device_revocation")
-    private Boolean overrideDeviceRevocation=true;
+    private Boolean overrideDeviceRevocation = false;
 
     public SecurityPolicyWidevine() {
     }

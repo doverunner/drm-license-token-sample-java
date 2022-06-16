@@ -52,22 +52,22 @@ public class SecurityPolicy {
     }
 
     public String getTrackType() {
-        return trackType;
+        return this.trackType;
     }
 
     public SecurityPolicyWidevine getWidevine() {
-        return widevine;
+        return this.widevine;
     }
 
     public SecurityPolicyPlayready getPlayready() {
-        return playready;
+        return this.playready;
     }
 
     public SecurityPolicyFairplay getFairplay() {
-        return fairplay;
+        return this.fairplay;
     }
 
     public SecurityPolicyNcg getNcg() {
-        return ncg;
+        return this.ncg;
     }
 }
