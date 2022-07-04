@@ -2,7 +2,8 @@ package com.pallycon.sample.token.policy.common;
 
 public enum ResponseFormat {
     ORIGINAL("original"),
-    CUSTOM("custom");
+    @Deprecated CUSTOM("custom"),
+    JSON("json");
 
     private String value;
 
