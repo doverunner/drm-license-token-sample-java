@@ -16,7 +16,7 @@ import com.pallycon.sample.token.policy.securityPolicy.widevine.WidevineSecurity
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonSerialize()
 @JsonPropertyOrder({"security_level", "required_hdcp_version", "required_cgms_flags",
-        "disable_analog_output", "hdcp_srm_rule", "override_device_revocation"})
+        "disable_analog_output", "hdcp_srm_rule", "override_device_revocation", "enable_license_cipher"})
 
 public class SecurityPolicyWidevine {
 
@@ -32,6 +32,8 @@ public class SecurityPolicyWidevine {
     private String hdcpSrmRule;
     @JsonProperty("override_device_revocation")
     private Boolean overrideDeviceRevocation = false;
+    @JsonProperty("enable_license_cipher")
+    private Boolean enableLicenseCipher = false;
 
     public SecurityPolicyWidevine() {
     }
@@ -63,6 +65,11 @@ public class SecurityPolicyWidevine {
 
     public SecurityPolicyWidevine overrideDeviceRevocation(Boolean overrideDeviceRevocation) {
         this.overrideDeviceRevocation = overrideDeviceRevocation;
+        return this;
+    }
+
+    public SecurityPolicyWidevine enableLicenseCipher(Boolean enableLicenseCipher) {
+        this.enableLicenseCipher = enableLicenseCipher;
         return this;
     }
 

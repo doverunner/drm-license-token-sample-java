@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.pallycon.sample.token.policy.common.TrackType;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({"track_type", "key", "iv"})
+@JsonPropertyOrder({"track_type", "key", "iv", "key_id"})
 public class ExternalKeyPolicyHlsAes {
 
     @JsonProperty("track_type")
@@ -15,11 +15,14 @@ public class ExternalKeyPolicyHlsAes {
     private String key;
     @JsonProperty("iv")
     private String iv;
+    @JsonProperty("key_id")
+    private String keyId;
 
-    public ExternalKeyPolicyHlsAes(TrackType trackType, String key, String iv) {
+    public ExternalKeyPolicyHlsAes(TrackType trackType, String key, String iv, String keyId) {
         this.trackType = trackType;
         this.key = key;
         this.iv = iv;
+        this.keyId = keyId;
     }
 
     public String getTrackType() {
@@ -32,5 +35,9 @@ public class ExternalKeyPolicyHlsAes {
 
     public String getIv() {
         return iv;
+    }
+
+    public String getKeyId() {
+        return keyId;
     }
 }

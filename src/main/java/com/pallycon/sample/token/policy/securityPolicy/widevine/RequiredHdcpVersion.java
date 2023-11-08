@@ -10,6 +10,7 @@ public enum RequiredHdcpVersion {
     HDCP_V2("HDCP_V2"),
     HDCP_V2_1("HDCP_V2_1"),
     HDCP_V2_2("HDCP_V2_2"),
+    HDCP_V2_3("HDCP_V2_3"),
     HDCP_NO_DIGITAL_OUTPUT("HDCP_NO_DIGITAL_OUTPUT");
 
     private String value;
