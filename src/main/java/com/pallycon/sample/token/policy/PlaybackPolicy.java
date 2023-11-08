@@ -9,7 +9,7 @@ import com.pallycon.sample.token.policy.playbackPolicy.AllowedTrackTypes;
 import java.util.regex.Pattern;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({"persistent", "license_duration", "expire_date", "allowed_track_types", "rental_duration", "playback_duration"})
+@JsonPropertyOrder({"persistent", "license_duration", "expire_date", "allowed_track_types", "rental_duration", "playback_duration", "max_stream_per_user"})
 public class PlaybackPolicy {
 
     @JsonProperty("persistent")
@@ -30,6 +30,8 @@ public class PlaybackPolicy {
     @JsonProperty("playback_duration")
     private Integer playbackDuration;
 
+    @JsonProperty("max_stream_per_user")
+    private Integer maxStreamPerUser;
 
     public PlaybackPolicy() {
     }
@@ -67,6 +69,11 @@ public class PlaybackPolicy {
 
     public PlaybackPolicy playbackDuration(int playbackDuration) {
         this.playbackDuration = playbackDuration;
+        return this;
+    }
+
+    public PlaybackPolicy maxStreamPerUser(int maxStreamPerUser) {
+        this.maxStreamPerUser = maxStreamPerUser;
         return this;
     }
 
@@ -112,5 +119,9 @@ public class PlaybackPolicy {
 
     public Integer getPlaybackDuration() {
         return playbackDuration;
+    }
+
+    public Integer getMaxStreamPerUser() {
+        return maxStreamPerUser;
     }
 }
