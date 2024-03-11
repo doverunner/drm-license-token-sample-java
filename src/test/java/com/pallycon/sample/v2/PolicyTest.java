@@ -6,6 +6,7 @@ import com.pallycon.sample.token.policy.playbackPolicy.AllowedTrackTypes;
 import com.pallycon.sample.token.policy.securityPolicy.fairplay.FairplayHdcpEnforcement;
 import com.pallycon.sample.token.policy.securityPolicy.playready.DigitalVideoProtection;
 import com.pallycon.sample.token.policy.securityPolicy.playready.PlayreadySecurityLevel;
+import com.pallycon.sample.token.policy.securityPolicy.widevine.HdcpSrmRule;
 import com.pallycon.sample.token.policy.securityPolicy.widevine.RequiredHdcpVersion;
 import com.pallycon.sample.token.policy.securityPolicy.widevine.WidevineSecurityLevel;
 import com.pallycon.sample.exception.PallyConTokenException;
@@ -34,7 +35,8 @@ public class PolicyTest {
                 .trackType(TrackType.ALL)
                 .widevine(new SecurityPolicyWidevine()
                         .securityLevel(WidevineSecurityLevel.SW_SECURE_CRYPTO)
-                        .requiredHdcpVersion(RequiredHdcpVersion.HDCP_NONE))
+                        .requiredHdcpVersion(RequiredHdcpVersion.HDCP_NONE)
+                        .hdcpSrmRule(HdcpSrmRule.HDCP_SRM_RULE_NONE))
                 .playready(new SecurityPolicyPlayready()
                         .securityLevel(PlayreadySecurityLevel.LEVEL_150)
                         .digitalVideoProtection(DigitalVideoProtection.LEVEL_100))
@@ -48,6 +50,7 @@ public class PolicyTest {
                     "\"widevine\":{" +
                     "\"security_level\":1," +
                     "\"required_hdcp_version\":\"HDCP_NONE\"," +
+                    "\"hdcp_srm_rule\":\"HDCP_SRM_RULE_NONE\"," +
                     "\"override_device_revocation\":false," +
                     "\"enable_license_cipher\":false" +
                     "}," +
@@ -148,11 +151,11 @@ public class PolicyTest {
                                 "5eee5eee5eee5eee5eee5eee5eee5eee"),
                         new ExternalKeyPolicyHlsAes(TrackType.HD,
                                 "c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3",
-                                "c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3",
+                                "5eee5eee5eee5eee5eee5eee5eee5eee",
                                 "5eee5eee5eee5eee5eee5eee5eee5eee"),
                         new ExternalKeyPolicyHlsAes(TrackType.UHD1,
                                 "5eee5eee5eee5eee5eee5eee5eee5eee",
-                                "5eee5eee5eee5eee5eee5eee5eee5eee",
+                                "2a2a2b2b2a2a2b2b2a2a2b2b2a2a2b2b",
                                 "2a2a2b2b2a2a2b2b2a2a2b2b2a2a2b2b")
                     )
                 );
@@ -164,7 +167,7 @@ public class PolicyTest {
                 "{\"track_type\":\"HD\",\"key\":\"c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3\"," +
                     "\"iv\":\"5eee5eee5eee5eee5eee5eee5eee5eee\",\"key_id\":\"5eee5eee5eee5eee5eee5eee5eee5eee\"}," +
                 "{\"track_type\":\"UHD1\",\"key\":\"5eee5eee5eee5eee5eee5eee5eee5eee\"," +
-                    "\"iv\":\"2a2a2b2b2a2a2b2b2a2a2b2b2a2a2b2b\",\"key_id\":\"5eee5eee5eee5eee5eee5eee5eee5eee\"}" +
+                    "\"iv\":\"2a2a2b2b2a2a2b2b2a2a2b2b2a2a2b2b\",\"key_id\":\"2a2a2b2b2a2a2b2b2a2a2b2b2a2a2b2b\"}" +
             "]}";
 
         ObjectMapper objectMapper = new ObjectMapper();
