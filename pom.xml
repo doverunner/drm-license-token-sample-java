@@ -3,11 +3,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.pallycon</groupId>
-    <artifactId>pallycon-token-sample-java</artifactId>
-    <version>2.2.0</version>
+    <groupId>com.doverunner</groupId>
+    <artifactId>doverunner-token-sample-java</artifactId>
+    <version>3.0.0</version>
     <name>sample</name>
-    <description>PallyCon Token Sample for Java</description>
+    <description>Doverunner Token Sample for Java</description>
 
     <properties>
         <java.version>21</java.version>
@@ -74,7 +74,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <packageName>com.pallycon.sample</packageName>
+                            <packageName>com.doverunner.sample</packageName>
                             <classpathPrefix>lib/</classpathPrefix>
                         </manifest>
                     </archive>
