@@ -1,4 +1,4 @@
-# :bulb: PallyCon Token JAVA Sample
+# :bulb: Doverunner Token JAVA Sample (v3.0)
 
 
 
@@ -17,19 +17,19 @@
 
 ### Directories
 
-| dir                                |            | description                |
-| ---------------------------------- | ---------- | -------------------------- |
-| /src/main/java/com/pallycon/sample | /config    |                            |
-|                                    | /exception |                            |
-|                                    | /token     |                            |
-|                                    | /util      |                            |
-| /src/main/resource                 |            | log settings               |
-| /src/test/java/com/pallycon/sample |            | Guide to make Token Sample |
+| dir                                  |            | description                |
+|--------------------------------------| ---------- | -------------------------- |
+| /src/main/java/com/doverunner/sample | /config    |                            |
+|                                      | /exception |                            |
+|                                      | /token     |                            |
+|                                      | /util      |                            |
+| /src/main/resource                   |            | log settings               |
+| /src/test/java/com/doverunner/sample   |            | Guide to make Token Sample |
 
-✅ If you want to **simply generate PallyCon version of DRM LICENSE TOKEN**, follow the guidance below :
+✅ If you want to **simply generate Doverunner version of DRM LICENSE TOKEN**, follow the guidance below :
 
 1. clone this project.
-2. To generate, see the **Quick Test Example** below or `/src/test/java/com/pallycon/sample/PallyConDrmTokenSampleTest.java`.
+2. To generate, see the **Quick Test Example** below or `/src/test/java/com/doverunner/sample/DoverunnerDrmTokenSampleTest.java`.
 
 
 
@@ -53,8 +53,8 @@ public class SampleTest {
     public void makeToken() {
         
         String licenseToken = "";
-        PallyConDrmTokenPolicy policy = null;
-        PallyConDrmTokenClient token = null;
+        DoverunnerDrmTokenPolicy policy = null;
+        DoverunnerDrmTokenClient token = null;
 
         /**
          * 1. set up policies you want
@@ -110,7 +110,7 @@ public class SampleTest {
          * 2. build policy
          * */
         try {
-            policy = new PallyConDrmTokenPolicy
+            policy = new DoverunnerDrmTokenPolicy
                     .PolicyBuilder()
                     .playbackPolicy(playbackPolicy)
                     .externalKey(externalKeyPolicy)
@@ -122,7 +122,7 @@ public class SampleTest {
             /**
              * 3. create token
              * */
-            token = new PallyConDrmTokenClient()
+            token = new DoverunnerDrmTokenClient()
                 	.widevine()
                     .siteId("<Site ID>")
                     .siteKey("<Site Key>")
@@ -135,7 +135,7 @@ public class SampleTest {
             logger.debug(token.toJsonString());
             licenseToken = token.execute();
 
-        } catch (PallyConTokenException e) {
+        } catch (DoverunnerTokenException e) {
             licenseToken = e.getMessage();
         } catch (Exception e) {
             licenseToken = "unexpected Exception || " + e.getMessage();
@@ -146,7 +146,7 @@ public class SampleTest {
 }
 ```
 
-After run the mothod, you can get the TOKEN you intended below the '--result--' string.  if there are minor mistakes when created, `result` will return error messages we already made on  `ErrorCode` or you can see the messages below. Follow the comment and fix the bugs. 
+After run the method, you can get the TOKEN you intended below the '--result--' string.  if there are minor mistakes when created, `result` will return error messages we already made on  `ErrorCode` or you can see the messages below. Follow the comment and fix the bugs. 
 
 For example, 
 
@@ -157,13 +157,13 @@ For example,
 }
 ```
 
-If you want to see All the error codes and error messages you would get, see the `pallycon\excepion\ErrorCode.java` . 
+If you want to see All the error codes and error messages you would get, see the `doverunner/sample/excepion/ErrorCode.java` . 
 
 
 
 
 
-We hope this guide would be helpful to generate DRM License Token to request PallyCon Multi-DRM Cloud Server where get the License issued from.
+We hope this guide would be helpful to generate DRM License Token to request Doverunner Multi-DRM Cloud Server where get the License issued from.
 
 
 
