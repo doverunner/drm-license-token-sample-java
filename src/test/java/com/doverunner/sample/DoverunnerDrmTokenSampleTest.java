@@ -57,8 +57,8 @@ public class DoverunnerDrmTokenSampleTest {
      * 3. create token
      *
      *  TODO need to fill out `Config.java`.
-     *  fields in Config will be automatically match to `PallyConDrmTokenClient`
-     *  Also `siteId, siteKey, accessKey, userId, cId` of PallyConDrmTokenClient can be substituted independently if want.
+     *  fields in Config will be automatically match to `DoverunnerDrmTokenClient`
+     *  Also `siteId, siteKey, accessKey, userId, cId` of DoverunnerDrmTokenClient can be substituted independently if want.
      */
 
     /**

@@ -28,7 +28,7 @@ import java.util.TimeZone;
 public class DoverunnerDrmTokenClient implements DoverunnerDrmToken {
 
     /**
-     *  To make PallyConToken, REQUIREMENTS are below .
+     *  To make DoverunnerToken, REQUIREMENTS are below .
      *  @param drmType
      *  @param siteId
      *  @param userId
