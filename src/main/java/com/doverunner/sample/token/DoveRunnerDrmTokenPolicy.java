@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.doverunner.sample.exception.DoverunnerTokenException;
+import com.doverunner.sample.exception.DoveRunnerTokenException;
 import com.doverunner.sample.token.policy.ExternalKeyPolicy;
 import com.doverunner.sample.token.policy.PlaybackPolicy;
 import com.doverunner.sample.token.policy.SecurityPolicy;
@@ -15,11 +15,11 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Create policy data for @ Doverunner DRM Token policy.
+ * Create policy data for @ DoveRunner DRM Token policy.
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({"policy_version", "playback_policy", "security_policy", "external_key"})
-public class DoverunnerDrmTokenPolicy {
+public class DoveRunnerDrmTokenPolicy {
 
     @JsonProperty("policy_version")
     private final int POLICY_VERSION = 2;
@@ -33,7 +33,7 @@ public class DoverunnerDrmTokenPolicy {
     @JsonProperty("external_key")
     private ExternalKeyPolicy externalKey;
 
-    public DoverunnerDrmTokenPolicy(PolicyBuilder policyBuilder) {
+    public DoveRunnerDrmTokenPolicy(PolicyBuilder policyBuilder) {
         this.playbackPolicy = policyBuilder.playbackPolicy;
         this.securityPolicy = policyBuilder.securityPolicy;
         this.externalKey = policyBuilder.externalKey;
@@ -66,13 +66,13 @@ public class DoverunnerDrmTokenPolicy {
             return this;
         }
 
-        public DoverunnerDrmTokenPolicy build() throws DoverunnerTokenException {
+        public DoveRunnerDrmTokenPolicy build() throws DoveRunnerTokenException {
             validate();
-            DoverunnerDrmTokenPolicy policy = new DoverunnerDrmTokenPolicy(this);
+            DoveRunnerDrmTokenPolicy policy = new DoveRunnerDrmTokenPolicy(this);
             return policy;
         }
 
-        private void validate() throws DoverunnerTokenException {
+        private void validate() throws DoveRunnerTokenException {
             if (null != this.playbackPolicy) {
                 this.playbackPolicy.check();
             }
@@ -83,12 +83,12 @@ public class DoverunnerDrmTokenPolicy {
         }
     } //----------------------------- end of builder pattern
 
-    public String toJsonString() throws DoverunnerTokenException {
+    public String toJsonString() throws DoveRunnerTokenException {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             return objectMapper.writeValueAsString(this);
         } catch (JsonProcessingException e) {
-            throw new DoverunnerTokenException("2001");
+            throw new DoveRunnerTokenException("2001");
         }
     }
 

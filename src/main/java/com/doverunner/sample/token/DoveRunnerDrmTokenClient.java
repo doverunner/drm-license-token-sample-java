@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.doverunner.sample.config.Config;
-import com.doverunner.sample.exception.DoverunnerTokenException;
+import com.doverunner.sample.exception.DoveRunnerTokenException;
 import com.doverunner.sample.token.policy.common.ResponseFormat;
 import com.doverunner.sample.util.StringEncrypter;
 
@@ -25,10 +25,10 @@ import java.util.TimeZone;
 @JsonPropertyOrder({
         "drm_type", "site_id", "user_id", "cid", "policy", "response_format", "key_rotation", "timestamp", "hash"
 })
-public class DoverunnerDrmTokenClient implements DoverunnerDrmToken {
+public class DoveRunnerDrmTokenClient implements DoveRunnerDrmToken {
 
     /**
-     *  To make DoverunnerToken, REQUIREMENTS are below .
+     *  To make DoveRunnerToken, REQUIREMENTS are below .
      *  @param drmType
      *  @param siteId
      *  @param userId
@@ -68,7 +68,7 @@ public class DoverunnerDrmTokenClient implements DoverunnerDrmToken {
     private static final String AES_IV = "0123456789abcdef";
 
     // default : TODO SET CONFIG FIELDS.
-    public DoverunnerDrmTokenClient() {
+    public DoveRunnerDrmTokenClient() {
         this.playready()
             .siteId(Config.SITE_ID)
             .siteKey(Config.SITE_KEY)
@@ -79,81 +79,81 @@ public class DoverunnerDrmTokenClient implements DoverunnerDrmToken {
             .keyRotation(false);
     }
 
-    public DoverunnerDrmTokenClient siteKey(String siteKey) {
+    public DoveRunnerDrmTokenClient siteKey(String siteKey) {
         this.siteKey = siteKey;
         return this;
     }
 
-    public DoverunnerDrmTokenClient accessKey(String accessKey) {
+    public DoveRunnerDrmTokenClient accessKey(String accessKey) {
         this.accessKey = accessKey;
         return this;
     }
 
-    public DoverunnerDrmTokenClient playready() {
+    public DoveRunnerDrmTokenClient playready() {
         this.drmType = "PlayReady";
         return this;
     }
 
-    public DoverunnerDrmTokenClient widevine() {
+    public DoveRunnerDrmTokenClient widevine() {
         this.drmType = "Widevine";
         return this;
     }
 
-    public DoverunnerDrmTokenClient fairplay() {
+    public DoveRunnerDrmTokenClient fairplay() {
         this.drmType = "FairPlay";
         return this;
     }
 
-    public DoverunnerDrmTokenClient ncg() {
+    public DoveRunnerDrmTokenClient ncg() {
         this.drmType = "NCG";
         return this;
     }
 
-    public DoverunnerDrmTokenClient wiseplay() {
+    public DoveRunnerDrmTokenClient wiseplay() {
         this.drmType = "Wiseplay";
         return this;
     }
 
-    public DoverunnerDrmTokenClient siteId(String siteId) {
+    public DoveRunnerDrmTokenClient siteId(String siteId) {
         this.siteId = siteId;
         return this;
     }
 
-    public DoverunnerDrmTokenClient userId(String userId) {
+    public DoveRunnerDrmTokenClient userId(String userId) {
         this.userId = userId;
         return this;
     }
 
-    public DoverunnerDrmTokenClient cId(String cId) {
+    public DoveRunnerDrmTokenClient cId(String cId) {
         this.cId = cId;
         return this;
     }
 
-    public DoverunnerDrmTokenClient policy(DoverunnerDrmTokenPolicy policyRequest) throws DoverunnerTokenException, Exception {
+    public DoveRunnerDrmTokenClient policy(DoveRunnerDrmTokenPolicy policyRequest) throws DoveRunnerTokenException, Exception {
         this.policy = policyRequest.toJsonString();
         StringEncrypter stringEncrypter = new StringEncrypter(this.siteKey, AES_IV);
         this.encPolicy = stringEncrypter.encrypt(this.policy);
         return this;
     }
 
-    public DoverunnerDrmTokenClient responseFormat(ResponseFormat responseFormat) {
+    public DoveRunnerDrmTokenClient responseFormat(ResponseFormat responseFormat) {
         this.responseFormat = responseFormat.getValue();
         return this;
     }
 
-    public DoverunnerDrmTokenClient keyRotation(Boolean keyRotation) {
+    public DoveRunnerDrmTokenClient keyRotation(Boolean keyRotation) {
         this.keyRotation = keyRotation;
         return this;
     }
 
-    private DoverunnerDrmTokenClient timestamp(){
+    private DoveRunnerDrmTokenClient timestamp(){
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
         format.setTimeZone(TimeZone.getTimeZone("GMT"));
         this.timestamp = format.format(new Date());
         return this;
     }
 
-    private DoverunnerDrmTokenClient hash() throws NoSuchAlgorithmException {
+    private DoveRunnerDrmTokenClient hash() throws NoSuchAlgorithmException {
         StringBuffer bf = new StringBuffer();
         bf.append(this.accessKey);
         bf.append(this.drmType);
@@ -176,7 +176,7 @@ public class DoverunnerDrmTokenClient implements DoverunnerDrmToken {
             timestamp();
             hash();
             result = Base64.getEncoder().encodeToString(this.toJsonString().getBytes());
-        } catch (DoverunnerTokenException e) {
+        } catch (DoveRunnerTokenException e) {
             result = e.getMessage();
         } catch (Exception e) {
             result = e.getMessage();
@@ -185,34 +185,34 @@ public class DoverunnerDrmTokenClient implements DoverunnerDrmToken {
         return result;
     }
 
-    private void validateSampleObject() throws DoverunnerTokenException {
+    private void validateSampleObject() throws DoveRunnerTokenException {
         if (null == this.userId) {
-            throw new DoverunnerTokenException("1000");
+            throw new DoveRunnerTokenException("1000");
         }
         if (null == this.cId) {
-            throw new DoverunnerTokenException("1001");
+            throw new DoveRunnerTokenException("1001");
         }
         if (null == this.siteId) {
-            throw new DoverunnerTokenException("1002");
+            throw new DoveRunnerTokenException("1002");
         }
         if (null == this.accessKey) {
-            throw new DoverunnerTokenException("1003");
+            throw new DoveRunnerTokenException("1003");
         }
         if (null == this.siteKey) {
-            throw new DoverunnerTokenException("1004");
+            throw new DoveRunnerTokenException("1004");
         }
         if (null == this.policy) {
-            throw new DoverunnerTokenException("1005");
+            throw new DoveRunnerTokenException("1005");
         }
     }
 
     @Override
-    public String toJsonString() throws DoverunnerTokenException {
+    public String toJsonString() throws DoveRunnerTokenException {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             return objectMapper.writeValueAsString(this);
         } catch (JsonProcessingException e) {
-            throw new DoverunnerTokenException("2001");
+            throw new DoveRunnerTokenException("2001");
         }
     }
 

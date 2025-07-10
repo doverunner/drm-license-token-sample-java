@@ -2,7 +2,7 @@ package com.doverunner.sample.token.policy;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.doverunner.sample.exception.DoverunnerTokenException;
+import com.doverunner.sample.exception.DoveRunnerTokenException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,7 +83,7 @@ public class ExternalKeyPolicy {
         return hlsAesList;
     }
 
-    public void check() throws DoverunnerTokenException {
+    public void check() throws DoveRunnerTokenException {
         if (null != this.mpegCencList ) {
             checkMpegCenc();
         }
@@ -97,39 +97,39 @@ public class ExternalKeyPolicy {
         if (0 == this.mpegCencList.size()
                 && 0 == this.hlsAesList.size()
                 && null == this.ncg) {
-            throw new DoverunnerTokenException("1018");
+            throw new DoveRunnerTokenException("1018");
         }
     }
 
     //check each fields
-    private void checkMpegCenc() throws DoverunnerTokenException {
+    private void checkMpegCenc() throws DoveRunnerTokenException {
         for (ExternalKeyPolicyMpegCenc mpegCenc : this.mpegCencList) {
             if (!checkHex16(mpegCenc.getKeyId())) {
-                throw new DoverunnerTokenException("1040");
+                throw new DoveRunnerTokenException("1040");
             }
             if (!checkHex16(mpegCenc.getKey())) {
-                throw new DoverunnerTokenException("1041");
+                throw new DoveRunnerTokenException("1041");
             }
             if (null != mpegCenc.getIv() && !checkHex16(mpegCenc.getIv())) {
-                throw new DoverunnerTokenException("1042");
+                throw new DoveRunnerTokenException("1042");
             }
         }
     }
 
-    private void checkHlsAes() throws DoverunnerTokenException {
+    private void checkHlsAes() throws DoveRunnerTokenException {
         for (ExternalKeyPolicyHlsAes hlsAes : this.hlsAesList) {
             if (!checkHex16(hlsAes.getKey())) {
-                throw new DoverunnerTokenException("1044");
+                throw new DoveRunnerTokenException("1044");
             }
             if (!checkHex16(hlsAes.getIv())) {
-                throw new DoverunnerTokenException("1045");
+                throw new DoveRunnerTokenException("1045");
             }
         }
     }
 
-    private void checkNcg() throws DoverunnerTokenException {
+    private void checkNcg() throws DoveRunnerTokenException {
         if (!checkHex32(this.ncg.getCek())) {
-            throw new DoverunnerTokenException("1047");
+            throw new DoveRunnerTokenException("1047");
         }
     }
 

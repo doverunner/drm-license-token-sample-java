@@ -1,8 +1,8 @@
 package com.doverunner.sample.token;
 
-import com.doverunner.sample.exception.DoverunnerTokenException;
+import com.doverunner.sample.exception.DoveRunnerTokenException;
 
-public interface DoverunnerDrmToken {
+public interface DoveRunnerDrmToken {
 
     String getDrmType();
 
@@ -18,6 +18,6 @@ public interface DoverunnerDrmToken {
 
     String getAccessKey();
 
-    String toJsonString() throws DoverunnerTokenException;
+    String toJsonString() throws DoveRunnerTokenException;
 
 }

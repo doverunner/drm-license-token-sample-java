@@ -6,12 +6,12 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
-public class DoverunnerTokenException extends Exception{
-    private static Logger logger = LoggerFactory.getLogger(DoverunnerTokenException.class);
+public class DoveRunnerTokenException extends Exception{
+    private static Logger logger = LoggerFactory.getLogger(DoveRunnerTokenException.class);
     private ErrorCode errorCode;
     private String message;
 
-    public DoverunnerTokenException(String code) {
+    public DoveRunnerTokenException(String code) {
         this.errorCode = new ErrorCode(code);
         this.message = objectToJson(this.errorCode);
         logger.error(this.message);

@@ -6,7 +6,7 @@ package com.doverunner.sample.config;
 public class Config {
 
     // TODO need to fill out this config settings.
-    //  below can be modified in DoverunnerDrmTokenClient class.
+    //  below can be modified in DoveRunnerDrmTokenClient class.
     public static final String SITE_KEY = "<Site Key>";
     public static final String ACCESS_KEY = "<Access Key>";
     public static final String SITE_ID = "<Site ID>";

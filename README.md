@@ -1,8 +1,8 @@
-# Java sample code for Doverunner Multi-DRM license token generation
+# DoveRunner Token Sample - JAVA (v3.0)
 
 ## Overview
 
-This repository provides server-side sample code that can generate license token for Doverunner multi-DRM service. DRM license tokens are used to authenticate license requests in multi-DRM integration workflows.
+This repository provides server-side sample code that can generate license token for DoveRunner multi-DRM service. DRM license tokens are used to authenticate license requests in multi-DRM integration workflows.
 
 Here's how a license token works in the DRM license issuance process.
 - When a multi-DRM client tries to play DRM content, the client requests a token to the content service platform to acquire DRM license. The service platform verifies that the user requesting the token has permission to the content, and then generates a token data according to the specification.
@@ -38,10 +38,10 @@ Here's how a license token works in the DRM license issuance process.
 | /src/main/resource                   |            | log settings               |
 | /src/test/java/com/doverunner/sample   |            | Guide to make Token Sample |
 
-✅ If you want to **simply generate Doverunner version of DRM LICENSE TOKEN**, follow the guidance below :
+✅ If you want to **simply generate DoveRunner version of DRM LICENSE TOKEN**, follow the guidance below :
 
 1. clone this project.
-2. To generate, see the **Quick Test Example** below or `/src/test/java/com/doverunner/sample/DoverunnerDrmTokenSampleTest.java`.
+2. To generate, see the **Quick Test Example** below or `/src/test/java/com/doverunner/sample/DoveRunnerDrmTokenSampleTest.java`.
 
 
 
@@ -65,8 +65,8 @@ public class SampleTest {
     public void makeToken() {
         
         String licenseToken = "";
-        DoverunnerDrmTokenPolicy policy = null;
-        DoverunnerDrmTokenClient token = null;
+        DoveRunnerDrmTokenPolicy policy = null;
+        DoveRunnerDrmTokenClient token = null;
 
         /**
          * 1. set up policies you want
@@ -122,7 +122,7 @@ public class SampleTest {
          * 2. build policy
          * */
         try {
-            policy = new DoverunnerDrmTokenPolicy
+            policy = new DoveRunnerDrmTokenPolicy
                     .PolicyBuilder()
                     .playbackPolicy(playbackPolicy)
                     .externalKey(externalKeyPolicy)
@@ -134,7 +134,7 @@ public class SampleTest {
             /**
              * 3. create token
              * */
-            token = new DoverunnerDrmTokenClient()
+            token = new DoveRunnerDrmTokenClient()
                 	.widevine()
                     .siteId("<Site ID>")
                     .siteKey("<Site Key>")
@@ -147,7 +147,7 @@ public class SampleTest {
             logger.debug(token.toJsonString());
             licenseToken = token.execute();
 
-        } catch (DoverunnerTokenException e) {
+        } catch (DoveRunnerTokenException e) {
             licenseToken = e.getMessage();
         } catch (Exception e) {
             licenseToken = "unexpected Exception || " + e.getMessage();
@@ -175,7 +175,7 @@ If you want to see All the error codes and error messages you would get, see the
 
 
 
-We hope this guide would be helpful to generate DRM License Token to request Doverunner Multi-DRM Cloud Server where get the License issued from.
+We hope this guide would be helpful to generate DRM License Token to request DoveRunner Multi-DRM Cloud Server where get the License issued from.
 
 
 
@@ -206,4 +206,4 @@ We hope this guide would be helpful to generate DRM License Token to request Dov
 
 ## Support
 
-If you have any questions or issues with the token sample, please create a ticket at [Doverunner Helpdesk](https://support.doverunner.com) website.
+If you have any questions or issues with the token sample, please create a ticket at [DoveRunner Helpdesk](https://support.doverunner.com) website.

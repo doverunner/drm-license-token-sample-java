@@ -5,7 +5,7 @@ import com.doverunner.sample.token.policy.playbackPolicy.AllowedTrackTypes;
 import com.doverunner.sample.token.policy.securityPolicy.fairplay.FairplayHdcpEnforcement;
 import com.doverunner.sample.token.policy.securityPolicy.ncg.NcgControlHdcp;
 import com.doverunner.sample.token.policy.securityPolicy.playready.DigitalAudioProtection;
-import com.doverunner.sample.exception.DoverunnerTokenException;
+import com.doverunner.sample.exception.DoveRunnerTokenException;
 import com.doverunner.sample.token.policy.securityPolicy.playready.AnalogVideoProtection;
 import com.doverunner.sample.token.policy.securityPolicy.playready.DigitalVideoProtection;
 import com.doverunner.sample.token.policy.securityPolicy.playready.PlayreadySecurityLevel;
@@ -13,8 +13,8 @@ import com.doverunner.sample.token.policy.securityPolicy.widevine.HdcpSrmRule;
 import com.doverunner.sample.token.policy.securityPolicy.widevine.RequiredCgmsFlags;
 import com.doverunner.sample.token.policy.securityPolicy.widevine.RequiredHdcpVersion;
 import com.doverunner.sample.token.policy.securityPolicy.widevine.WidevineSecurityLevel;
-import com.doverunner.sample.token.DoverunnerDrmTokenClient;
-import com.doverunner.sample.token.DoverunnerDrmTokenPolicy;
+import com.doverunner.sample.token.DoveRunnerDrmTokenClient;
+import com.doverunner.sample.token.DoveRunnerDrmTokenPolicy;
 import com.doverunner.sample.token.policy.*;
 import com.doverunner.sample.token.policy.securityPolicy.wiseplay.OutputControl;
 import com.doverunner.sample.token.policy.securityPolicy.wiseplay.WiseplaySecurityLevel;
@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Sample Code for creating token.
  */
-public class DoverunnerDrmTokenSampleTest {
+public class DoveRunnerDrmTokenSampleTest {
 
     private static Logger logger = LoggerFactory.getLogger(PolicyTest.class);
 
@@ -37,12 +37,12 @@ public class DoverunnerDrmTokenSampleTest {
     private String licenseTokenForNCG = "";
     private String licenseTokenForWiseplay = "";
 
-    private DoverunnerDrmTokenPolicy policy = null;
-    private DoverunnerDrmTokenClient tokenForPlayready = null;
-    private DoverunnerDrmTokenClient tokenForWidevine = null;
-    private DoverunnerDrmTokenClient tokenForFairplay = null;
-    private DoverunnerDrmTokenClient tokenForNCG = null;
-    private DoverunnerDrmTokenClient tokenForWiseplay = null;
+    private DoveRunnerDrmTokenPolicy policy = null;
+    private DoveRunnerDrmTokenClient tokenForPlayready = null;
+    private DoveRunnerDrmTokenClient tokenForWidevine = null;
+    private DoveRunnerDrmTokenClient tokenForFairplay = null;
+    private DoveRunnerDrmTokenClient tokenForNCG = null;
+    private DoveRunnerDrmTokenClient tokenForWiseplay = null;
 
     private PlaybackPolicy playbackPolicy = new PlaybackPolicy();
     private SecurityPolicy securityPolicyForAll = new SecurityPolicy();
@@ -57,8 +57,8 @@ public class DoverunnerDrmTokenSampleTest {
      * 3. create token
      *
      *  TODO need to fill out `Config.java`.
-     *  fields in Config will be automatically match to `DoverunnerDrmTokenClient`
-     *  Also `siteId, siteKey, accessKey, userId, cId` of DoverunnerDrmTokenClient can be substituted independently if want.
+     *  fields in Config will be automatically match to `DoveRunnerDrmTokenClient`
+     *  Also `siteId, siteKey, accessKey, userId, cId` of DoveRunnerDrmTokenClient can be substituted independently if want.
      */
 
     /**
@@ -109,8 +109,8 @@ public class DoverunnerDrmTokenSampleTest {
     /**
      * 2. build policy
      * */
-    private void buildPolicy() throws DoverunnerTokenException {
-        this.policy = new DoverunnerDrmTokenPolicy
+    private void buildPolicy() throws DoveRunnerTokenException {
+        this.policy = new DoveRunnerDrmTokenPolicy
                 .PolicyBuilder()
                 .playbackPolicy(playbackPolicy)
                 .securityPolicy(securityPolicyForAll)
@@ -129,13 +129,13 @@ public class DoverunnerDrmTokenSampleTest {
 
             // use default settings included.
             // if want to replace fields, see #makeTokenForFairplay.
-            this.tokenForPlayready = new DoverunnerDrmTokenClient().policy(policy);
+            this.tokenForPlayready = new DoveRunnerDrmTokenClient().policy(policy);
 
             // generate token.
             this.licenseTokenForPlayready = this.tokenForPlayready.execute();
             logger.debug("tokenForPlayready JSON: {}", this.tokenForPlayready.toJsonString());
 
-        } catch (DoverunnerTokenException e) {
+        } catch (DoveRunnerTokenException e) {
             this.licenseTokenForPlayready = e.getMessage();
         } catch (Exception e) {
             this.licenseTokenForPlayready = "unexpected Exception || " + e.getMessage();
@@ -154,13 +154,13 @@ public class DoverunnerDrmTokenSampleTest {
             buildPolicy();
 
             // if want to replace more fields, see #makeTokenForFairplay.
-            this.tokenForWidevine = new DoverunnerDrmTokenClient().widevine().policy(policy);
+            this.tokenForWidevine = new DoveRunnerDrmTokenClient().widevine().policy(policy);
 
             // generate token.
             this.licenseTokenForWidevine = this.tokenForWidevine.execute();
             logger.debug("tokenForWidevine JSON : {}", this.tokenForWidevine.toJsonString());
 
-        } catch (DoverunnerTokenException e) {
+        } catch (DoveRunnerTokenException e) {
             licenseTokenForWidevine = e.getMessage();
         } catch (Exception e) {
             this.licenseTokenForWidevine = "unexpected Exception || " + e.getMessage();
@@ -177,12 +177,12 @@ public class DoverunnerDrmTokenSampleTest {
             // build policy.
             buildPolicy();
 
-            this.tokenForFairplay = new DoverunnerDrmTokenClient().fairplay().policy(policy);
+            this.tokenForFairplay = new DoveRunnerDrmTokenClient().fairplay().policy(policy);
 
             // generate token.
             this.licenseTokenForFairplay = this.tokenForFairplay.execute();
             logger.debug("tokenForFairplay JSON : {}", this.tokenForFairplay.toJsonString());
-        } catch (DoverunnerTokenException e) {
+        } catch (DoveRunnerTokenException e) {
             licenseTokenForFairplay = e.getMessage();
         } catch (Exception e) {
             this.licenseTokenForFairplay = "unexpected Exception || " + e.getMessage();
@@ -200,12 +200,12 @@ public class DoverunnerDrmTokenSampleTest {
             // build policy.
             buildPolicy();
 
-            this.tokenForNCG = new DoverunnerDrmTokenClient().ncg().policy(policy);
+            this.tokenForNCG = new DoveRunnerDrmTokenClient().ncg().policy(policy);
 
             // generate token.
             this.licenseTokenForNCG = this.tokenForNCG.execute();
             logger.debug("tokenForNCG JSON : {}", this.tokenForNCG.toJsonString());
-        } catch (DoverunnerTokenException e) {
+        } catch (DoveRunnerTokenException e) {
             licenseTokenForNCG = e.getMessage();
         } catch (Exception e) {
             this.licenseTokenForNCG = "unexpected Exception || " + e.getMessage();
@@ -222,12 +222,12 @@ public class DoverunnerDrmTokenSampleTest {
             // build policy.
             buildPolicy();
 
-            this.tokenForWiseplay = new DoverunnerDrmTokenClient().wiseplay().policy(policy);
+            this.tokenForWiseplay = new DoveRunnerDrmTokenClient().wiseplay().policy(policy);
 
             // generate token.
             this.licenseTokenForWiseplay = this.tokenForWiseplay.execute();
             logger.debug("tokenForWiseplay JSON : {}", this.tokenForWiseplay.toJsonString());
-        } catch (DoverunnerTokenException e) {
+        } catch (DoveRunnerTokenException e) {
             licenseTokenForWiseplay = e.getMessage();
         } catch (Exception e) {
             this.licenseTokenForWiseplay = "unexpected Exception || " + e.getMessage();
