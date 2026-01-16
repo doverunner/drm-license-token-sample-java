@@ -13,9 +13,9 @@ import com.doverunner.sample.token.policy.securityPolicy.playready.PlayreadySecu
 import com.doverunner.sample.token.policy.securityPolicy.widevine.HdcpSrmRule;
 import com.doverunner.sample.token.policy.securityPolicy.widevine.RequiredHdcpVersion;
 import com.doverunner.sample.token.policy.securityPolicy.widevine.WidevineSecurityLevel;
-import com.doverunner.sample.exception.DoveRunnerTokenException;
+import com.doverunner.sample.exception.DoverunnerTokenException;
 import com.doverunner.sample.token.policy.common.TrackType;
-import com.doverunner.sample.token.DoveRunnerDrmTokenPolicy;
+import com.doverunner.sample.token.DoverunnerDrmTokenPolicy;
 import com.doverunner.sample.token.policy.*;
 import org.junit.Assert;
 import org.junit.Test;
@@ -112,7 +112,7 @@ public class PolicyTest {
             JsonNode actualNode = objectMapper.readTree(objectMapper.writeValueAsString(securityPolicy));
             Assert.assertEquals(experimentNode, actualNode);
 
-            DoveRunnerDrmTokenPolicy policy = new DoveRunnerDrmTokenPolicy
+            DoverunnerDrmTokenPolicy policy = new DoverunnerDrmTokenPolicy
                     .PolicyBuilder()
                     .playbackPolicy(playbackPolicy)
                     .securityPolicy(securityPolicy)
@@ -120,13 +120,13 @@ public class PolicyTest {
             logger.info("--------------policy--------------");
             Assert.assertEquals(policyStr, policy.toJsonString());
 
-        } catch (JsonProcessingException | DoveRunnerTokenException e) {
+        } catch (JsonProcessingException | DoverunnerTokenException e) {
             e.printStackTrace();
         }
     }
 
     @Test
-    public void externalKeyListTest() throws DoveRunnerTokenException, JsonProcessingException {
+    public void externalKeyListTest() throws DoverunnerTokenException, JsonProcessingException {
         ExternalKeyPolicyMpegCenc mpegCenc = new ExternalKeyPolicyMpegCenc(
                 TrackType.ALL_VIDEO,
                 "1111aaaa1111aaaa1111aaaa1111aaaa",
@@ -147,14 +147,14 @@ public class PolicyTest {
                 .mpegCenc(mpegCenc)
                 .mpegCenc(mpegCenc2)
                 .mpegCenc(mpegCenc3);
-        DoveRunnerDrmTokenPolicy policyWithAdd = new DoveRunnerDrmTokenPolicy
+        DoverunnerDrmTokenPolicy policyWithAdd = new DoverunnerDrmTokenPolicy
                 .PolicyBuilder()
                 .externalKey(externalKeyPolicyWithAdd)
                 .build();
 
         ExternalKeyPolicy externalKeyPolicyWithList = new ExternalKeyPolicy()
                 .mpegCenc(Arrays.asList(mpegCenc, mpegCenc2, mpegCenc3));
-        DoveRunnerDrmTokenPolicy policyWithList = new DoveRunnerDrmTokenPolicy
+        DoverunnerDrmTokenPolicy policyWithList = new DoverunnerDrmTokenPolicy
                 .PolicyBuilder()
                 .externalKey(externalKeyPolicyWithList)
                 .build();

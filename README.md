@@ -1,4 +1,4 @@
-# DoveRunner Token Sample - JAVA (v3.0)
+# :bulb: DoveRunner Token JAVA Sample (v3.0)
 
 ## Overview
 
@@ -41,11 +41,36 @@ Here's how a license token works in the DRM license issuance process.
 ✅ If you want to **simply generate DoveRunner version of DRM LICENSE TOKEN**, follow the guidance below :
 
 1. clone this project.
-2. To generate, see the **Quick Test Example** below or `/src/test/java/com/doverunner/sample/DoveRunnerDrmTokenSampleTest.java`.
+2. **Set up configuration** (see Configuration section below).
+3. To generate, see the **Quick Test Example** below or `/src/test/java/com/doverunner/sample/DoverunnerDrmTokenSampleTest.java`.
 
 
 
+### Configuration
 
+Before running the sample, you need to set up your DoveRunner DRM credentials.
+
+
+#### Setup Steps
+
+1. **Copy the template file**:
+   ```bash
+   cp config.properties.example config.properties
+   ```
+
+2. **Edit `config.properties`** and fill in your actual values:
+   ```properties
+   doverunner.siteKey=YOUR_ACTUAL_SITE_KEY
+   doverunner.accessKey=YOUR_ACTUAL_ACCESS_KEY
+   doverunner.siteId=YOUR_ACTUAL_SITE_ID
+   doverunner.userId=YOUR_TEST_USER_ID
+   doverunner.contentId=YOUR_CONTENT_ID
+   ```
+
+3. **Security Note**:                                                                                                                                                                                                                                                                                   
+- The `config.properties` file is ignored by Git (`.gitignore`)                                                                                                                                                                                                                                      
+ - Never commit your actual credentials to version control                                                                                                                                                                                                                                            
+ - Only the `config.properties.example` template is tracked in Git
 
 ### Quick Test Example
 
@@ -65,8 +90,8 @@ public class SampleTest {
     public void makeToken() {
         
         String licenseToken = "";
-        DoveRunnerDrmTokenPolicy policy = null;
-        DoveRunnerDrmTokenClient token = null;
+        DoverunnerDrmTokenPolicy policy = null;
+        DoverunnerDrmTokenClient token = null;
 
         /**
          * 1. set up policies you want
@@ -122,7 +147,7 @@ public class SampleTest {
          * 2. build policy
          * */
         try {
-            policy = new DoveRunnerDrmTokenPolicy
+            policy = new DoverunnerDrmTokenPolicy
                     .PolicyBuilder()
                     .playbackPolicy(playbackPolicy)
                     .externalKey(externalKeyPolicy)
@@ -134,7 +159,7 @@ public class SampleTest {
             /**
              * 3. create token
              * */
-            token = new DoveRunnerDrmTokenClient()
+            token = new DoverunnerDrmTokenClient()
                 	.widevine()
                     .siteId("<Site ID>")
                     .siteKey("<Site Key>")
@@ -147,7 +172,7 @@ public class SampleTest {
             logger.debug(token.toJsonString());
             licenseToken = token.execute();
 
-        } catch (DoveRunnerTokenException e) {
+        } catch (DoverunnerTokenException e) {
             licenseToken = e.getMessage();
         } catch (Exception e) {
             licenseToken = "unexpected Exception || " + e.getMessage();
@@ -202,7 +227,6 @@ We hope this guide would be helpful to generate DRM License Token to request Dov
 | 1045       | HlsAes : The Iv should be 16byte hex String                  |
 | 1047       | Ncg : The Cek should be 32byte hex String                    |
 | 2001       | json parser error                                            |
-
 
 ## Support
 

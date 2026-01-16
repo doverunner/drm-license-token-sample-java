@@ -3,7 +3,7 @@ package com.doverunner.sample.token.policy;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.doverunner.sample.exception.DoveRunnerTokenException;
+import com.doverunner.sample.exception.DoverunnerTokenException;
 import com.doverunner.sample.token.policy.playbackPolicy.AllowedTrackTypes;
 
 import java.util.regex.Pattern;
@@ -86,11 +86,11 @@ public class PlaybackPolicy {
     }
 
 
-    public void check() throws DoveRunnerTokenException {
+    public void check() throws DoverunnerTokenException {
         if (null != this.expireDate
                 && !"".equals(this.expireDate)
                 && !checkDates(this.expireDate)) {
-            throw new DoveRunnerTokenException("1011");
+            throw new DoverunnerTokenException("1011");
         }
     }
 
