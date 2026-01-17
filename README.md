@@ -1,4 +1,4 @@
-# :bulb: DoveRunner Token JAVA Sample (v3.0)
+# DoveRunner Token Sample - JAVA (v3.0)
 
 ## Overview
 
