@@ -1,0 +1,18 @@
+# DRM Token Sample Configuration Template
+# Copy this file to 'config.properties' and fill in your actual values
+# The 'config.properties' file is ignored by Git for security
+
+# Site ID from DoveRunner DRM
+doverunner.siteId=<Site ID>
+
+# Site Key from DoveRunner DRM
+doverunner.siteKey=<Site Key>
+
+# Access Key from DoveRunner DRM
+doverunner.accessKey=<Access Key>
+
+# User ID for testing
+doverunner.userId=<tester-user>
+
+# Content ID for testing
+doverunner.contentId=<Content ID>

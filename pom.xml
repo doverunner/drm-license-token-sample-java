@@ -5,7 +5,7 @@
 
     <groupId>com.doverunner</groupId>
     <artifactId>doverunner-token-sample-java</artifactId>
-    <version>3.0.0</version>
+    <version>3.0.1</version>
     <name>sample</name>
     <description>DoveRunner Token Sample for Java</description>
 
